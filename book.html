@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grabsel - Professional Web Design & Development</title>
+    <meta name="description" content="We create high-converting websites and powerful brands that drive business growth.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #fff;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Landing Page */
+        .landing-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            z-index: 1000;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .landing-page.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+        }
+
+        .landing-logo {
+            width: 120px;
+            height: 120px;
+            background: #007AFF;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            animation: pulse 2s infinite alternate;
+        }
+
+        .landing-logo-text {
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .landing-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1D1D1F;
+            text-align: center;
+        }
+
+        .landing-subtitle {
+            font-size: 18px;
+            color: #86868B;
+            margin-bottom: 40px;
+            max-width: 400px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .enter-button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 18px 36px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0, 122, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enter-button:hover {
+            background: #0062CC;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 122, 255, 0.4);
+        }
+
+        .enter-button:active {
+            transform: translateY(0);
+        }
+
+        .arrow-icon {
+            transition: all 0.3s ease;
+        }
+
+        .enter-button:hover .arrow-icon {
+            transform: translateX(5px);
+        }
+
+        .enter-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+
+        .enter-button:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 122, 255, 0.4);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(0, 122, 255, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 122, 255, 0);
+            }
+        }
+
+        /* Main Website (hidden initially) */
+        .main-website {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease;
+        }
+
+        .main-website.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Main Website Styles */
+        :root {
+            --primary: #007AFF;
+            --primary-dark: #0056CC;
+            --secondary: #34C759;
+            --dark: #1D1D1F;
+            --light: #F5F5F7;
+            --gray: #86868B;
+            --gray-light: #E5E5EA;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --nav-bg: rgba(255, 255, 255, 0.92);
+        }
+
+        .success-message {
+            display: none;
+            background: #34C759;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* App Container */
+        .app-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Pages */
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 80px 20px 20px;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            opacity: 0;
+            background: var(--light);
+        }
+
+        .page.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .page.leaving {
+            transform: translateX(-30%);
+            opacity: 0;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 20px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 2px;
+            background: var(--dark);
+            transition: all 0.3s ease;
+            transform-origin: left center;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(1px, -1px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(1px, 1px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu a {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .mobile-menu a.active {
+            color: var(--primary);
+        }
+
+        /* Home Page */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-headline {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subheadline {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .card-description {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .ios-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(0, 122, 255, 0.2);
+            width: 100%;
+        }
+
+        .ios-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 122, 255, 0.3);
+        }
+
+        .ios-button:active {
+            transform: translateY(0);
+        }
+
+        /* Services Page */
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .service-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-icon {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .service-price {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .service-description {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* Work Page */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .work-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: scale(1.02);
+        }
+
+        .work-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .work-overlay {
+            background: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .work-name {
+            font-size: 1.3rem;
+            margin: 0.5rem 0;
+        }
+
+        .work-category {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .view-button {
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .view-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Process Page */
+        .process-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            bottom: -25px;
+            width: 2px;
+            background: var(--gray-light);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .step-description {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Reviews Page */
+        .review-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .review-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .review-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 40px;
+            color: var(--gray-light);
+            line-height: 1;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Contact Page */
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Booking Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .modal-header p {
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .service-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .work-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .hero-headline {
+                font-size: 48px;
+            }
+            
+            .mobile-menu {
+                width: 300px;
+                left: auto;
+                right: 0;
+                transform: translateX(100%);
+            }
+            
+            .mobile-menu.active {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="landing-page" id="landingPage">
+        <div class="landing-logo">
+            <span class="landing-logo-text">G</span>
+        </div>
+        <h1 class="landing-title">Grabsel</h1>
+        <p class="landing-subtitle">Professional Web Design & Development Agency</p>
+        <button class="enter-button" id="enterButton">
+            Enter Agency
+            <i class="fas fa-arrow-right arrow-icon"></i>
+        </button>
+    </div>
+
+    <!-- Main Website (initially hidden) -->
+    <div class="main-website" id="mainWebsite">
+        <div class="app-container">
+            <!-- Navigation -->
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <span class="logo-icon">G</span>
+                    <span>Grabsel</span>
+                </a>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobile-menu">
+                <a href="#home" class="active">Home</a>
+                <a href="#services">Services</a>
+                <a href="#work">Our Work</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <!-- Home Page -->
+            <div class="page active" id="home-page">
+                <div class="hero-section">
+                    <h1 class="hero-headline">Premium Digital Experiences</h1>
+                    <p class="hero-subheadline">We design and develop high-converting websites that grow your business 24/7.</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3x</div>
+                        <div class="stat-label">Conversion Lift</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Weeks Avg</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="card-icon">
+                            <i class="fas fa-code"></i>
+                        </span>
+                        Branding Design & Web Development
+                    </h3>
+                    <p class="card-description">We create memorable brand identities that resonate with your audience and stand out in competitive markets.</p>
+                    <a href="#services" class="ios-button">
+                        <i class="fas fa-arrow-right"></i> Explore Services
+                    </a>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="card-icon" style="background: #34c759;">
+                            <i class="fab fa-whatsapp"></i>
+                        </span>
+                        Chat with Us on WhatsApp
+                    </h3>
+                    <p class="card-description">
+                        Got a question or need help? Send us a message on WhatsApp for quick, friendly support.
+                    </p>
+                    <div class="contact-actions" style="margin-top: 30px;">
+                        <p style="color: var(--gray); margin-bottom: 20px;">Prefer to message us directly?</p>
+                        <a href="https://wa.me/689567800" class="ios-button" style="background: #25D366;">
+                            <i class="fab fa-whatsapp"></i> Start WhatsApp Chat
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Page -->
+            <div class="page" id="services-page">
+                <h1 class="hero-headline">Our Services</h1>
+                <p class="hero-subheadline">Premium solutions tailored to your business needs</p>
+
+                <div class="service-grid">
+                    <div class="service-card">
+                        <h3 class="service-title">
+                            <i class="fas fa-paint-brush service-icon"></i>
+                            ✍️ Instagram Captions (10)
+                        </h3>
+                        <div class="service-price">From $14.99</div>
+                        <p class="service-description">
+                            Get 10 eye-catching Instagram captions that fit your brand and boost engagement.
+                        </p>
+                        <button class="ios-button book-button" data-service="✍️ Instagram Captions (10)">
+                            Book Service
+                        </button>
+                    </div>
+
+                    <div class="service-card">
+                        <h3 class="service-title">
+                            <i class="fas fa-code service-icon"></i>
+                            Resume Polish 📰
+                        </h3>
+                        <div class="service-price">From $24.99</div>
+                        <p class="service-description">
+                            We'll improve the look and content of your resume to help you stand out and land more interviews.
+                        </p>
+                        <button class="ios-button book-button" data-service="Resume Polish 📰">
+                            Book Service
+                        </button>
+                    </div>
+
+                    <div class="service-card">
+                        <h3 class="service-title">
+                            <i class="fas fa-search service-icon"></i>
+                            🛍️ Product Descriptions (1-5)
+                        </h3>
+                        <div class="service-price">$10 each / $40 for 5</div>
+                        <p class="service-description">
+                            We'll write clear and attractive descriptions that help your products sell better.
+                        </p>
+                        <button class="ios-button book-button" data-service="🛍️ Product Descriptions (1-5)">
+                            Book Service
+                        </button>
+                    </div>
+
+                    <div class="service-card">
+                        <h3 class="service-title">
+                            <i class="fas fa-mobile-alt service-icon"></i>
+                            🌐 Business Website + 💳 Digital Business Card (free)
+                        </h3>
+                        <div class="service-price">From $120.99</div>
+                        <p class="service-description">
+                            We'll create a professional website for your business and include a free digital business card to share online.
+                        </p>
+                        <button class="ios-button book-button" data-service="🌐 Business Website + 💳 Digital Business Card (free)">
+                            Book Service
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Page -->
+            <div class="page" id="work-page">
+                <h1 class="hero-headline">Featured Projects</h1>
+                <p class="hero-subheadline">See how we've helped businesses achieve remarkable results across Europe</p>
+
+                <div class="work-grid">
+                    <!-- CleanShine UK -->
+                    <div class="work-card">
+                        <img src="https://images.pexels.com/photos/11739051/pexels-photo-11739051.jpeg" alt="CleanShine UK" class="work-image">
+                        <div class="work-overlay">
+                            <h3 class="work-name">CleanShine UK 🇬🇧</h3>
+                            <p class="work-category">Modern website and full branding suite for a premium UK cleaning service.</p>
+                            <a href="https://cleannshine.uk" target="_blank" class="view-button">View Work</a>
+                        </div>
+                    </div>
+
+                    <!-- SavaLeting UK -->
+                    <div class="work-card">
+                        <img src="https://images.pexels.com/photos/6872156/pexels-photo-6872156.jpeg" alt="SavaLeting UK" class="work-image">
+                        <div class="work-overlay">
+                            <h3 class="work-name">SavaLeting UK 🇬🇧</h3>
+                            <p class="work-category">End-to-end digital solution for UK-based property management and lettings.</p>
+                            <a href="https://savaleting.uk" target="_blank" class="view-button">View Work</a>
+                        </div>
+                    </div>
+
+                    <!-- La Trattoria Italy -->
+                    <div class="work-card">
+                        <img src="Screenshot 2025-07-22 at 5.46.08 AM.png" alt="La Trattoria" class="work-image">
+                        <div class="work-overlay">
+                            <h3 class="work-name">La Trattoria 🇮🇹</h3>
+                            <p class="work-category">Facility maintenance and deep-cleaning services for this iconic Milan restaurant.</p>
+                            <a href="https://trattorialatrebia.it/" target="_blank" class="view-button">View Work</a>
+                        </div>
+                    </div>
+
+                    <!-- Czyste Okno Poland -->
+                    <div class="work-card">
+                        <img src="https://images.pexels.com/photos/713297/pexels-photo-713297.jpeg" alt="Czyste Okno" class="work-image">
+                        <div class="work-overlay">
+                            <h3 class="work-name">Czyste Okno 🇵🇱</h3>
+                            <p class="work-category">Responsive site and branding for top-tier window cleaning in Warsaw, Poland.</p>
+                            <a href="https://czyste-okna.pl/" target="_blank" class="view-button">View Work</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process Page -->
+            <div class="page" id="process-page">
+                <h1 class="hero-headline">Our Process</h1>
+                <p class="hero-subheadline">A structured approach that delivers consistent results</p>
+                
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Discovery</h3>
+                        <p class="step-description">We deep-dive into your business, goals, and target audience to create a strategic foundation.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Design</h3>
+                        <p class="step-description">We craft beautiful, conversion-focused designs that reflect your brand and engage your audience.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Development</h3>
+                        <p class="step-description">We build your website with clean code, fast loading times, and perfect mobile optimization.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Launch</h3>
+                        <p class="step-description">We deploy your website and provide ongoing support to ensure continued success and growth.</p>
+                    </div>
+                </div>
+                
+                <button class="ios-button" style="margin-top: 30px;" id="process-book-btn">
+                    <i class="far fa-calendar-alt"></i> Book a Consultation
+                </button>
+            </div>
+
+            <!-- Reviews Page -->
+            <div class="page" id="reviews-page">
+                <h1 class="hero-headline">Client Success Stories</h1>
+                <p class="hero-subheadline">Don't just take our word for it - hear what our clients say</p>
+                
+                <div class="review-card">
+                    <p class="review-text">Grabsel transformed our digital presence completely. Our website now converts 3x better and we've become the industry leader. Their strategic approach made all the difference.</p>
+                    <div class="review-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <h4>Sarah Mitchell</h4>
+                            <p>CEO, TechFlow Solutions</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <p class="review-text">The attention to detail and strategic thinking is incredible. They didn't just build a website, they built a growth engine that continues to deliver results months after launch.</p>
+                    <div class="review-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>Michael Rodriguez</h4>
+                            <p>Founder, GrowthLab</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <p class="review-text">Working with Grabsel was seamless. They delivered on time and the results speak for themselves - 200% increase in leads! Communication was excellent throughout.</p>
+                    <div class="review-author">
+                        <div class="author-avatar">EK</div>
+                        <div class="author-info">
+                            <h4>Emily Kim</h4>
+                            <p>Marketing Director</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div class="page" id="contact-page">
+                <h1 class="hero-headline">Let's Build Something</h1>
+                <p class="hero-subheadline">Have a project in mind? We'd love to hear from you.</p>
+                
+                <form id="contactForm">
+                    <div id="contactSuccessMessage" class="success-message" style="display: none;">
+                        <i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully.
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-name" class="form-label">Your Name</label>
+                        <input type="text" id="contact-name" name="name" class="form-input" placeholder="John Smith" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-phone" class="form-label">Phone Number</label>
+                        <input type="tel" id="contact-phone" name="phone" class="form-input" placeholder="+1 (123) 456-7890" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-service" class="form-label">Service Needed</label>
+                        <select id="contact-service" name="service" class="form-input" required>
+                            <option value="" disabled selected>Select a service</option>
+                            <option value="Instagram Captions (10)">✍️ Instagram Captions (10)</option>
+                            <option value="Resume Polish">Resume Polish 📰</option>
+                            <option value="Product Descriptions">🛍️ Product Descriptions (1-5)</option>
+                            <option value="Business Website">🌐 Business Website + 💳 Digital Business Card (free)</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-message" class="form-label">Project Details</label>
+                        <textarea id="contact-message" name="message" class="form-input form-textarea" placeholder="Tell us about your project..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="ios-button">
+                        <i class="far fa-paper-plane"></i> Submit Request
+                    </button>
+                </form>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <p style="color: var(--gray); margin-bottom: 15px;">Or contact us directly</p>
+
+                    <a href="https://wa.me/689567800" class="ios-button" style="background: #25D366;">
+                        <i class="fab fa-whatsapp"></i> Start WhatsApp Chat
+                    </a> <br> <br>
+                    <a href="mailto:grabselwebagency@gmail.com" style="color: var(--primary); font-weight: 600; display: block; margin-bottom: 10px;">
+                        <i class="far fa-envelope"></i> grabselwebagency@gmail.com
+                    </a>
+                    <a href="tel:+355689567800" style="color: var(--primary); font-weight: 600; display: block;">
+                        <i class="fas fa-phone-alt"></i> +355 68 956 7800
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Booking Modal -->
+        <div class="modal-overlay" id="booking-modal">
+            <div class="modal-container">
+                <button class="modal-close" id="modal-close">&times;</button>
+                <div class="modal-header">
+                    <h3>Book Your Service</h3>
+                    <p>Fill out this form and we'll get back to you within 24 hours</p>
+                </div>
+                
+                <!-- Success message (hidden by default) -->
+                <div id="bookingSuccessMessage" class="success-message" style="display: none;">
+                    <i class="fas fa-check-circle"></i> Thank you! Your booking request has been sent successfully.
+                </div>
+                
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="booking-name" class="form-label">Your Name</label>
+                        <input type="text" id="booking-name" name="name" class="form-input" placeholder="John Smith" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="booking-phone" class="form-label">Phone Number</label>
+                        <input type="tel" id="booking-phone" name="phone" class="form-input" placeholder="+1 (123) 456-7890" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="booking-service" class="form-label">Service Needed</label>
+                        <select id="booking-service" name="service" class="form-input" required>
+                            <option value="" disabled selected>Select a service</option>
+                            <option value="Instagram Captions (10)">✍️ Instagram Captions (10)</option>
+                            <option value="Resume Polish">Resume Polish 📰</option>
+                            <option value="Product Descriptions">🛍️ Product Descriptions (1-5)</option>
+                            <option value="Business Website">🌐 Business Website + 💳 Digital Business Card (free)</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="booking-message" class="form-label">Project Details</label>
+                        <textarea id="booking-message" name="message" class="form-input form-textarea" placeholder="Tell us about your project..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="ios-button">
+                        <i class="far fa-paper-plane"></i> Submit Booking Request
+                    </button>
+                </form>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <p style="color: var(--gray); margin-bottom: 15px;">Or contact us directly</p>
+                    <a href="https://wa.me/689567800" class="ios-button" style="background: #25D366;">
+                        <i class="fab fa-whatsapp"></i> Start WhatsApp Chat
+                    </a> <br> <br>
+                    <a href="tel:+355689567800" style="color: var(--primary); font-weight: 600; display: block;">
+                        <i class="fas fa-phone-alt"></i> +355 68 956 7800
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize EmailJS with your public key
+        (function() {
+            emailjs.init("evZWZ9qDExBZrHNhJ");
+        })();
+
+        // Landing page functionality
+        const landingPage = document.getElementById('landingPage');
+        const mainWebsite = document.getElementById('mainWebsite');
+        const enterButton = document.getElementById('enterButton');
+        
+        // Show main website when clicking enter button
+        enterButton.addEventListener('click', () => {
+            landingPage.classList.add('hidden');
+            setTimeout(() => {
+                mainWebsite.classList.add('visible');
+                document.body.style.overflow = 'auto';
+            }, 800);
+        });
+        
+        // Check if we should skip landing page (for direct links to sections)
+        if (window.location.hash) {
+            landingPage.style.display = 'none';
+            mainWebsite.classList.add('visible');
+        }
+
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close menu when clicking on links
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Page Navigation
+        const pages = {
+            'home': document.getElementById('home-page'),
+            'services': document.getElementById('services-page'),
+            'work': document.getElementById('work-page'),
+            'process': document.getElementById('process-page'),
+            'reviews': document.getElementById('reviews-page'),
+            'contact': document.getElementById('contact-page')
+        };
+
+        const menuLinks = document.querySelectorAll('.mobile-menu a');
+        
+        // Handle hash changes
+        function handleHashChange() {
+            const hash = window.location.hash.substring(1);
+            let targetPage = 'home';
+            
+            if (hash in pages) {
+                targetPage = hash;
+            }
+            
+            // Update active menu link
+            menuLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${targetPage}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+            
+            // Switch pages
+            Object.entries(pages).forEach(([pageName, pageElement]) => {
+                if (pageName === targetPage) {
+                    pageElement.classList.add('active');
+                    pageElement.style.display = 'block';
+                } else {
+                    if (pageElement.classList.contains('active')) {
+                        pageElement.classList.add('leaving');
+                        setTimeout(() => {
+                            pageElement.classList.remove('active', 'leaving');
+                            pageElement.style.display = 'none';
+                        }, 500);
+                    } else {
+                        pageElement.style.display = 'none';
+                    }
+                }
+            });
+        }
+        
+        // Initial page load
+        window.addEventListener('load', handleHashChange);
+        window.addEventListener('hashchange', handleHashChange);
+        
+        // Booking Modal
+        const bookingModal = document.getElementById('booking-modal');
+        const modalClose = document.getElementById('modal-close');
+        const bookButtons = document.querySelectorAll('.book-button, #process-book-btn');
+        
+        bookButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const service = this.getAttribute('data-service');
+                if (service) {
+                    document.querySelector('#bookingForm #booking-service').value = service;
+                }
+                bookingModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        modalClose.addEventListener('click', function() {
+            bookingModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        bookingModal.addEventListener('click', function(e) {
+            if (e.target === bookingModal) {
+                bookingModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Form Submissions
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: this.querySelector('#booking-name').value,
+                phone: this.querySelector('#booking-phone').value,
+                service: this.querySelector('#booking-service').value,
+                message: this.querySelector('#booking-message').value,
+                formType: "Booking Form"
+            };
+            
+            // EmailJS service and template IDs
+            const serviceID = "service_kzdjzas";
+            const templateID = "template_0ozgipi";
+            
+            // Send email using EmailJS
+            emailjs.send(serviceID, templateID, formData)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    // Show success message
+                    document.getElementById('bookingSuccessMessage').style.display = 'block';
+                    // Reset form
+                    document.getElementById('bookingForm').reset();
+                    // Hide success message after 3 seconds
+                    setTimeout(() => {
+                        document.getElementById('bookingSuccessMessage').style.display = 'none';
+                        // Close modal
+                        bookingModal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }, 3000);
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('There was an error submitting your booking. Please try again or contact us directly via WhatsApp.');
+                });
+        });
+        
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: this.querySelector('#contact-name').value,
+                phone: this.querySelector('#contact-phone').value,
+                service: this.querySelector('#contact-service').value,
+                message: this.querySelector('#contact-message').value,
+                formType: "Contact Form"
+            };
+            
+            // EmailJS service and template IDs
+            const serviceID = "service_kzdjzas";
+            const templateID = "template_0ozgipi";
+            
+            // Send email using EmailJS
+            emailjs.send(serviceID, templateID, formData)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    // Show success message
+                    document.getElementById('contactSuccessMessage').style.display = 'block';
+                    // Reset form
+                    document.getElementById('contactForm').reset();
+                    // Hide success message after 3 seconds
+                    setTimeout(() => {
+                        document.getElementById('contactSuccessMessage').style.display = 'none';
+                    }, 3000);
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('There was an error submitting your message. Please try again or contact us directly via WhatsApp.');
+                });
+        });
+    </script>
+</body>
+</html>
