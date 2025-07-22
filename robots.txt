@@ -7,4 +7,4 @@ User-agent: *
 Disallow: /admin/
 
 # Specify the location of your sitemap
-Sitemap: https://savaleting.uk/sitemap.xml
+Sitemap: https://grabsel.com/sitemap.xml
