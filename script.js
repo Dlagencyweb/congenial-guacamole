@@ -313,7 +313,10 @@ function subscribePresence() {
   if (presenceChannel) sb.removeChannel(presenceChannel);
 
   const ch = sb.channel(`presence:${roomId()}`, {
-    config: { presence: { key: currentUser?.id || 'anon_' + Math.random() } },
+    config: { presence: { key:
+  currentLinkedProfileId ||
+  currentUser?.id ||
+  ('anon_' + Math.random()) } },
   });
 
   ch.on('presence', { event: 'sync' }, () => {
@@ -330,7 +333,9 @@ function subscribePresence() {
     ch.subscribe(async (status) => {
       if (status === 'SUBSCRIBED') {
         await ch.track({
-          user_id:    currentUser.id,
+          user_id:
+  currentLinkedProfileId ||
+  currentUser.id,
           username:   currentProfile.username,
           avatar_url: currentProfile.avatar_url,
           online_at:  new Date().toISOString(),
@@ -389,23 +394,34 @@ function appendMessage(msg) {
 async function sendMessage() {
   if (!currentUser) {
     document.getElementById('auth-banner').classList.remove('hidden');
-    setTimeout(() => document.getElementById('auth-banner').classList.add('hidden'), 4000);
+    setTimeout(() =>
+      document.getElementById('auth-banner').classList.add('hidden'),
+      4000
+    );
     return;
   }
 
   const input = document.getElementById('chat-input');
   const content = input.value.trim();
+
   if (!content) return;
 
   input.value = '';
   closeEmojiPicker();
 
-  const { error } = await sb.from('messages').insert({
-    room:    roomId(),
-    user_id: currentUser.id,
-    content,
-  });
-  if (error) console.error('Send failed:', error.message);
+  const realUserId = currentLinkedProfileId || currentUser.id;
+
+  const { error } = await sb
+    .from('messages')
+    .insert({
+      room: roomId(),
+      user_id: realUserId,
+      content
+    });
+
+  if (error) {
+    console.error('Send failed:', error);
+  }
 }
 
 function handleChatKey(e) {
@@ -707,6 +723,11 @@ async function handleLogin(e) {
     //    app metadata and remapping currentUser.id in our app state.
     currentLinkedProfileId = profile.id;
 
+localStorage.setItem(
+  'linkedProfileId',
+  profile.id
+);
+
     await onSignedIn(anonData.user);
     closeAllModals();
   } catch (err) {
@@ -719,18 +740,46 @@ async function handleLogin(e) {
 
 // When a returning user logs in we map their anon session → their real profile.
 // This variable holds that override so all db writes use the correct profile id.
-let currentLinkedProfileId = null;
+let currentLinkedProfileId =
+  localStorage.getItem('linkedProfileId');
 
 async function signOut() {
+  localStorage.removeItem('linkedProfileId');
+  currentLinkedProfileId = null;
+
   await sb.auth.signOut();
-  document.getElementById('nav-dropdown').classList.add('hidden');
+
+  document
+    .getElementById('nav-dropdown')
+    .classList.add('hidden');
+
   showPage('home');
 }
 
 async function onSignedIn(user) {
   currentUser = user;
-  const { data } = await sb.from('profiles').select('*').eq('id', user.id).single();
-  currentProfile = data;
+
+  let profile = null;
+
+  if (currentLinkedProfileId) {
+    const { data } = await sb
+      .from('profiles')
+      .select('*')
+      .eq('id', currentLinkedProfileId)
+      .single();
+
+    profile = data;
+  } else {
+    const { data } = await sb
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    profile = data;
+  }
+
+  currentProfile = profile;
   updateNavUser();
 }
 
@@ -831,7 +880,10 @@ async function handleAvatarUpload(event) {
   const { data: urlData } = sb.storage.from('avatars').getPublicUrl(path);
   const avatarUrl = urlData.publicUrl + '?t=' + Date.now();
 
-  await sb.from('profiles').update({ avatar_url: avatarUrl }).eq('id', currentUser.id);
+  await sb.from('profiles').update({ avatar_url: avatarUrl }).eq(
+  'id',
+  currentLinkedProfileId || currentUser.id
+);
   currentProfile.avatar_url = avatarUrl;
   setNavAvatar();
 }
@@ -856,7 +908,10 @@ async function saveProfile() {
     if (!updates.social_links[k]) delete updates.social_links[k];
   });
 
-  const { error } = await sb.from('profiles').update(updates).eq('id', currentUser.id);
+  const { error } = await sb.from('profiles').update(updates).eq(
+  'id',
+  currentLinkedProfileId || currentUser.id
+);
   if (error) { showError('profile-error', error.message); return; }
 
   currentProfile = { ...currentProfile, ...updates };
