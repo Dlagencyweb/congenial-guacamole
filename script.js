@@ -288,24 +288,25 @@ function subscribeRealtime() {
 
   realtimeChannel = sb.channel(`room:${roomId()}`)
     .on('postgres_changes', {
-      event: 'INSERT',
-      schema: 'public',
-      table: 'messages',
-      filter: `room=eq.${roomId()}`,
-    }, async (payload) => {
-      // Fetch profile for the new message
-       for (const msg of data) {
+  event: 'INSERT',
+  schema: 'public',
+  table: 'messages',
+  filter: `room=eq.${roomId()}`,
+}, async (payload) => {
+
+  const msg = payload.new;
+
   const { data: profile } = await sb
     .from('profiles')
-    .select('*, profiles(username, avatar_url, display_name, social_links)')
+    .select('*')
     .eq('id', msg.user_id)
     .maybeSingle();
 
   msg.profiles = profile;
-        scrollToBottom();
+
   appendMessage(msg);
-}
-    })
+  scrollToBottom();
+})
     .on('broadcast', { event: 'typing' }, ({ payload }) => {
       if (payload.user_id !== currentUser?.id) showTyping(payload.username);
     })
