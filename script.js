@@ -10,7 +10,7 @@
 /* ══════════════════════════════════════════════════════════
    CONFIG — replace with your Supabase project values
    ══════════════════════════════════════════════════════════ */
-const SUPABASE_URL = 'https://duozyzcgqofacmwrorgc.supabase.co';
+const SUPABASE_URL = 'https://duozyzcgqofacmwrorgc.supabase.co/rest/v1/';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1b3p5emNncW9mYWNtd3JvcmdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExMTI4OTcsImV4cCI6MjA5NjY4ODg5N30.sUZvMMFdJzBOkyqfCj36Qb9xwucw1RfA_l3d8NuMkdY';
 
 /* ══════════════════════════════════════════════════════════
