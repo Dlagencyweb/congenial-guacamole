@@ -269,9 +269,9 @@ function openRoom(room) {
 
 async function loadMessages() {
   const channel = roomId();
-  const { data, error } = await sb
+ const { data, error } = await sb
   .from('messages')
-  .select('*')
+  .select('*, profiles(username, avatar_url, display_name, social_links)')
   .eq('room', channel)
   .order('created_at', { ascending: true })
   .limit(80);
@@ -294,14 +294,17 @@ function subscribeRealtime() {
       filter: `room=eq.${roomId()}`,
     }, async (payload) => {
       // Fetch profile for the new message
-      const { data: profile } = await sb
-        .from('profiles')
-        .select('username, avatar_url, display_name, social_links')
-        .eq('id', payload.new.user_id)
-        .single();
-      payload.new.profiles = profile;
-      appendMessage(payload.new);
-      scrollToBottom();
+       for (const msg of data) {
+  const { data: profile } = await sb
+    .from('profiles')
+    .select('*')
+    .eq('id', msg.user_id)
+    .maybeSingle();
+
+  msg.profiles = profile;
+        scrollToBottom();
+  appendMessage(msg);
+}
     })
     .on('broadcast', { event: 'typing' }, ({ payload }) => {
       if (payload.user_id !== currentUser?.id) showTyping(payload.username);
