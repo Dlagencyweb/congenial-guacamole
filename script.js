@@ -270,11 +270,11 @@ function openRoom(room) {
 async function loadMessages() {
   const channel = roomId();
   const { data, error } = await sb
-    .from('messages')
-    .select('*, profiles(username, avatar_url, display_name, social_links)')
-    .eq('room', channel)
-    .order('created_at', { ascending: true })
-    .limit(80);
+  .from('messages')
+  .select('*')
+  .eq('room', channel)
+  .order('created_at', { ascending: true })
+  .limit(80);
 
   if (error) { console.error(error); return; }
   const wrap = document.getElementById('messages');
