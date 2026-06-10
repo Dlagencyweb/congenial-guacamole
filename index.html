@@ -1,1835 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Grabsel Tools – Free online tools to boost your productivity. Password generator, QR code maker, text analyzer, caption generator, color palette creator and more." />
-  <meta name="keywords" content="free online tools, password generator, QR code generator, text analyzer, caption generator, color palette, productivity tools" />
-  <meta name="author" content="Grabsel Tools" />
-  <meta property="og:title" content="Grabsel Tools – Free Online Productivity Tools" />
-  <meta property="og:description" content="Free browser-based tools: password generator, QR codes, text analysis, Instagram captions, color palettes and more." />
-  <meta property="og:type" content="website" />
-  <meta name="robots" content="index, follow" />
-  <title>Grabsel Tools – Free Online Tools That Make Your Life Easier</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <title>Grabsel — Global Community Chat</title>
+  <meta name="description" content="Chat with people from every country. Politics, Dating, Gaming." />
   <link rel="stylesheet" href="style.css" />
- 
-  <!-- QR Code library (CDN, no framework) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-  <script src="script.js" defer></script>
-    <style>
-        /* ============================================================
-   GRABSEL TOOLS – style.css
-   Production-grade CSS, mobile-first, zero dependencies
-   ============================================================ */
-
-/* ---------- CSS VARIABLES ---------- */
-:root {
-  --clr-bg:        #0b0f1a;
-  --clr-surface:   #131829;
-  --clr-surface2:  #1a2035;
-  --clr-border:    rgba(255,255,255,0.08);
-  --clr-accent:    #4ade80;
-  --clr-accent2:   #22d3ee;
-  --clr-accent3:   #f472b6;
-  --clr-text:      #e2e8f0;
-  --clr-muted:     #94a3b8;
-  --clr-heading:   #f8fafc;
-  --clr-white:     #ffffff;
-
-  --radius-sm:     8px;
-  --radius-md:     16px;
-  --radius-lg:     24px;
-  --radius-xl:     32px;
-
-  --shadow-card:   0 4px 24px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.3);
-  --shadow-hover:  0 8px 48px rgba(74,222,128,0.12), 0 2px 8px rgba(0,0,0,0.4);
-  --shadow-glow:   0 0 40px rgba(74,222,128,0.18);
-
-  --font-display:  'Syne', sans-serif;
-  --font-body:     'DM Sans', sans-serif;
-
-  --transition:    all 0.26s cubic-bezier(0.4,0,0.2,1);
-  --max-w:         1200px;
-}
-
-/* ---------- RESET & BASE ---------- */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--font-body);
-  background: var(--clr-bg);
-  color: var(--clr-text);
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-img, video { max-width: 100%; }
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: var(--font-body); border: none; outline: none; }
-ul { list-style: none; }
-h1,h2,h3,h4 { font-family: var(--font-display); color: var(--clr-heading); line-height: 1.25; }
-input, select, textarea {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  color: var(--clr-text);
-  background: var(--clr-surface2);
-  border: 1.5px solid var(--clr-border);
-  border-radius: var(--radius-sm);
-  width: 100%;
-  padding: 10px 14px;
-  transition: var(--transition);
-  outline: none;
-  resize: vertical;
-}
-input:focus, select:focus, textarea:focus {
-  border-color: var(--clr-accent);
-  box-shadow: 0 0 0 3px rgba(74,222,128,0.12);
-}
-input[type="range"] {
-  padding: 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  accent-color: var(--clr-accent);
-  height: 6px;
-  cursor: pointer;
-}
-input[type="color"] {
-  width: 48px;
-  height: 40px;
-  padding: 2px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-}
-
-/* ---------- CONTAINER ---------- */
-.container {
-  width: 100%;
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* ---------- BUTTONS ---------- */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--clr-accent);
-  color: #0b0f1a;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.95rem;
-  padding: 13px 28px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  letter-spacing: 0.01em;
-}
-.btn-primary:hover {
-  background: #22c55e;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-glow);
-}
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--clr-muted);
-  font-size: 0.95rem;
-  padding: 13px 20px;
-  border-radius: 50px;
-  border: 1.5px solid var(--clr-border);
-  transition: var(--transition);
-  background: transparent;
-}
-.btn-ghost:hover { color: var(--clr-text); border-color: rgba(255,255,255,0.2); }
-
-.btn-tool {
-  width: 100%;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, var(--clr-accent) 0%, var(--clr-accent2) 100%);
-  color: #0b0f1a;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.95rem;
-  border-radius: var(--radius-sm);
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  margin-top: 14px;
-}
-.btn-tool:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: var(--shadow-glow); }
-
-.btn-tool-outline {
-  width: 100%;
-  padding: 11px 20px;
-  background: transparent;
-  color: var(--clr-accent);
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.9rem;
-  border-radius: var(--radius-sm);
-  border: 1.5px solid var(--clr-accent);
-  cursor: pointer;
-  transition: var(--transition);
-  margin-top: 10px;
-}
-.btn-tool-outline:hover { background: rgba(74,222,128,0.1); }
-
-/* ---------- NAVBAR ---------- */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(11,15,26,0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--clr-border);
-  transition: var(--transition);
-}
-.navbar.scrolled { background: rgba(11,15,26,0.97); }
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  gap: 20px;
-}
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--clr-heading);
-  white-space: nowrap;
-}
-.nav-logo strong { color: var(--clr-accent); }
-.logo-icon { font-size: 1.3rem; }
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex: 1;
-  justify-content: center;
-}
-.nav-links a {
-  color: var(--clr-muted);
-  font-size: 0.9rem;
-  padding: 7px 14px;
-  border-radius: 50px;
-  transition: var(--transition);
-}
-.nav-links a:hover { color: var(--clr-text); background: rgba(255,255,255,0.05); }
-
-.nav-cta {
-  background: rgba(74,222,128,0.12);
-  color: var(--clr-accent);
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.88rem;
-  padding: 9px 20px;
-  border-radius: 50px;
-  border: 1.5px solid rgba(74,222,128,0.3);
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
-}
-.nav-cta:hover { background: var(--clr-accent); color: #0b0f1a; }
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
-}
-.hamburger span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--clr-text);
-  border-radius: 2px;
-  transition: var(--transition);
-}
-
-/* ---------- HERO ---------- */
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding: 100px 0 80px;
-  text-align: center;
-}
-.hero-bg-shapes {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.18;
-}
-.shape-1 {
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, var(--clr-accent), transparent 70%);
-  top: -200px; left: -150px;
-  animation: drift1 14s ease-in-out infinite alternate;
-}
-.shape-2 {
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, var(--clr-accent2), transparent 70%);
-  top: -100px; right: -100px;
-  animation: drift2 18s ease-in-out infinite alternate;
-}
-.shape-3 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, var(--clr-accent3), transparent 70%);
-  bottom: -150px; left: 40%;
-  animation: drift1 22s ease-in-out infinite alternate-reverse;
-}
-@keyframes drift1 { to { transform: translate(40px, 30px); } }
-@keyframes drift2 { to { transform: translate(-30px, 40px); } }
-
-.hero-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 800px;
-}
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(74,222,128,0.1);
-  border: 1px solid rgba(74,222,128,0.25);
-  color: var(--clr-accent);
-  font-size: 0.82rem;
-  font-weight: 600;
-  padding: 6px 16px;
-  border-radius: 50px;
-  margin-bottom: 28px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  animation: fadeUp 0.6s ease both;
-}
-.hero-title {
-  font-size: clamp(2.2rem, 6vw, 4rem);
-  font-weight: 800;
-  color: var(--clr-heading);
-  margin-bottom: 20px;
-  animation: fadeUp 0.7s 0.1s ease both;
-}
-.hero-title em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--clr-accent) 0%, var(--clr-accent2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-sub {
-  color: var(--clr-muted);
-  font-size: 1.08rem;
-  max-width: 600px;
-  margin: 0 auto 36px;
-  line-height: 1.75;
-  animation: fadeUp 0.7s 0.2s ease both;
-}
-.hero-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 52px;
-  animation: fadeUp 0.7s 0.3s ease both;
-}
-.hero-stats {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
-  animation: fadeUp 0.7s 0.4s ease both;
-}
-.stat { text-align: center; }
-.stat-num {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--clr-heading);
-}
-.stat-label { font-size: 0.82rem; color: var(--clr-muted); text-transform: uppercase; letter-spacing: 0.06em; }
-.stat-divider { width: 1px; height: 40px; background: var(--clr-border); }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ---------- AD BANNER ---------- */
-.ad-banner {
-  padding: 16px 20px;
-  margin: 32px auto;
-}
-.ad-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  background: var(--clr-surface);
-  border: 1px dashed rgba(255,255,255,0.12);
-  border-radius: var(--radius-md);
-  padding: 20px;
-}
-.ad-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--clr-muted);
-}
-.ad-placeholder {
-  font-size: 0.85rem;
-  color: var(--clr-muted);
-  padding: 16px 32px;
-  border-radius: var(--radius-sm);
-  background: rgba(255,255,255,0.02);
-}
-
-/* ---------- FEATURES STRIP ---------- */
-.features-strip {
-  padding: 64px 0;
-}
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-}
-.feat-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 24px;
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-md);
-  transition: var(--transition);
-}
-.feat-card:hover { border-color: rgba(74,222,128,0.25); transform: translateY(-3px); }
-.feat-icon { font-size: 1.7rem; flex-shrink: 0; }
-.feat-card h3 { font-size: 1rem; margin-bottom: 4px; }
-.feat-card p { font-size: 0.87rem; color: var(--clr-muted); line-height: 1.55; }
-
-/* ---------- SECTION HEADER ---------- */
-.section-header {
-  text-align: center;
-  margin-bottom: 52px;
-}
-.section-tag {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--clr-accent);
-  margin-bottom: 12px;
-}
-.section-header h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); margin-bottom: 12px; }
-.section-header p { color: var(--clr-muted); font-size: 1rem; max-width: 520px; margin: 0 auto; }
-
-/* ---------- TOOLS SECTION ---------- */
-.tools-section { padding: 32px 0 80px; }
-
-.tool-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr));
-  gap: 24px;
-}
-
-/* ---------- TOOL CARD ---------- */
-.tool-card {
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
-  transition: var(--transition);
-}
-.tool-card:hover { border-color: rgba(74,222,128,0.2); box-shadow: var(--shadow-hover); }
-
-.tool-card-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 22px 24px;
-  cursor: pointer;
-  user-select: none;
-  transition: var(--transition);
-}
-.tool-card-header:hover { background: rgba(255,255,255,0.02); }
-
-.tool-card-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: var(--radius-sm);
-  background: var(--icon-bg);
-  color: var(--icon-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-.tool-card-meta { flex: 1; min-width: 0; }
-.tool-card-title { font-size: 1.05rem; margin-bottom: 3px; }
-.tool-card-desc { font-size: 0.85rem; color: var(--clr-muted); }
-.tool-card-toggle {
-  font-size: 0.8rem;
-  color: var(--clr-muted);
-  transition: transform 0.3s ease;
-  flex-shrink: 0;
-}
-.tool-card-toggle.open { transform: rotate(180deg); }
-
-.tool-card-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
-}
-.tool-card-body.open { max-height: 1200px; }
-
-.tool-inner {
-  padding: 6px 24px 26px;
-  border-top: 1px solid var(--clr-border);
-}
-
-/* ---------- AD CARD ---------- */
-.ad-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 160px;
-  cursor: default;
-}
-.ad-card:hover { box-shadow: var(--shadow-card); }
-.ad-card .ad-inner {
-  border: none;
-  background: transparent;
-  width: 100%;
-  padding: 0;
-}
-
-/* ---------- TOOL: PASSWORD GENERATOR ---------- */
-.pw-output-wrap {
-  position: relative;
-  margin: 16px 0 8px;
-}
-.pw-output {
-  padding-right: 52px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-  background: var(--clr-bg);
-  border-color: rgba(255,255,255,0.1);
-}
-.copy-btn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(74,222,128,0.12);
-  color: var(--clr-accent);
-  border: 1px solid rgba(74,222,128,0.2);
-  border-radius: 6px;
-  padding: 5px 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: var(--transition);
-}
-.copy-btn:hover { background: var(--clr-accent); color: #0b0f1a; }
-
-.pw-strength-bar-wrap {
-  height: 5px;
-  background: rgba(255,255,255,0.07);
-  border-radius: 99px;
-  margin: 10px 0 5px;
-  overflow: hidden;
-}
-.pw-strength-bar {
-  height: 100%;
-  width: 0%;
-  border-radius: 99px;
-  transition: width 0.4s ease, background 0.4s ease;
-}
-.pw-strength-label {
-  font-size: 0.8rem;
-  color: var(--clr-muted);
-  display: block;
-  margin-bottom: 16px;
-}
-
-.pw-controls { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
-.pw-range-wrap label { font-size: 0.88rem; color: var(--clr-muted); display: block; margin-bottom: 6px; }
-.pw-range-wrap strong { color: var(--clr-accent); }
-.pw-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.check-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.88rem;
-  color: var(--clr-muted);
-  cursor: pointer;
-}
-.check-label input[type="checkbox"] {
-  width: 15px;
-  height: 15px;
-  accent-color: var(--clr-accent);
-  cursor: pointer;
-}
-
-/* ---------- TOOL: QR CODE ---------- */
-.input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.input-group label { font-size: 0.85rem; color: var(--clr-muted); font-weight: 500; }
-.qr-options-row { display: flex; gap: 14px; margin-bottom: 4px; }
-.input-group-sm { display: flex; flex-direction: column; gap: 6px; flex: 1; }
-.input-group-sm label { font-size: 0.82rem; color: var(--clr-muted); }
-.qr-preview {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 60px;
-  margin-top: 20px;
-}
-.qr-preview canvas, .qr-preview img {
-  border-radius: var(--radius-sm);
-  border: 3px solid rgba(255,255,255,0.06);
-  background: #fff;
-  padding: 8px;
-}
-
-/* ---------- TOOL: TEXT ANALYZER ---------- */
-.text-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 18px;
-}
-.text-stat-card {
-  background: var(--clr-bg);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-sm);
-  padding: 16px 12px;
-  text-align: center;
-  transition: var(--transition);
-}
-.text-stat-card:hover { border-color: rgba(74,222,128,0.25); }
-.ts-num {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--clr-accent);
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.ts-label { font-size: 0.75rem; color: var(--clr-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-
-.freq-section { margin-top: 20px; }
-.freq-section h4 { font-size: 0.88rem; color: var(--clr-muted); margin-bottom: 10px; font-family: var(--font-body); font-weight: 500; }
-.freq-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-.freq-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 11px;
-  background: rgba(74,222,128,0.08);
-  border: 1px solid rgba(74,222,128,0.18);
-  border-radius: 50px;
-  font-size: 0.78rem;
-  color: var(--clr-accent);
-}
-.freq-count { opacity: 0.6; }
-
-/* ---------- TOOL: CAPTION GENERATOR ---------- */
-.caption-cats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-.cat-btn {
-  padding: 7px 14px;
-  background: var(--clr-bg);
-  border: 1.5px solid var(--clr-border);
-  border-radius: 50px;
-  font-size: 0.82rem;
-  color: var(--clr-muted);
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
-}
-.cat-btn:hover, .cat-btn.active {
-  background: rgba(74,222,128,0.1);
-  border-color: rgba(74,222,128,0.35);
-  color: var(--clr-accent);
-}
-.caption-output {
-  margin-top: 20px;
-  background: var(--clr-bg);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-md);
-  padding: 20px;
-  animation: fadeUp 0.35s ease both;
-}
-.caption-output p {
-  font-size: 1rem;
-  color: var(--clr-text);
-  line-height: 1.7;
-  margin-bottom: 12px;
-}
-.caption-hashtags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 16px;
-}
-.hash-tag {
-  font-size: 0.8rem;
-  color: var(--clr-accent2);
-  background: rgba(34,211,238,0.08);
-  border: 1px solid rgba(34,211,238,0.18);
-  border-radius: 50px;
-  padding: 3px 10px;
-}
-.copy-inline-btn {
-  background: transparent;
-  border: 1.5px solid var(--clr-border);
-  color: var(--clr-muted);
-  font-size: 0.82rem;
-  padding: 7px 16px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: var(--transition);
-}
-.copy-inline-btn:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
-
-/* ---------- TOOL: COLOR PALETTE ---------- */
-.color-mode-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 4px;
-}
-.color-mode-row label { font-size: 0.85rem; color: var(--clr-muted); }
-.palette-wrap {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-.pal-swatch {
-  flex: 1;
-  height: 140px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  padding-bottom: 10px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-.pal-swatch:hover { transform: scaleY(1.05); box-shadow: 0 8px 24px rgba(0,0,0,0.4); z-index: 1; }
-.pal-hex {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background: rgba(0,0,0,0.35);
-  color: #fff;
-  text-transform: uppercase;
-  backdrop-filter: blur(4px);
-}
-.pal-copied-badge {
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.7);
-  color: #fff;
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  border-radius: 4px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  white-space: nowrap;
-}
-.pal-swatch.copied .pal-copied-badge { opacity: 1; }
-
-/* ---------- TOAST ---------- */
-.copied-toast {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-  padding: 6px 16px;
-  background: var(--clr-accent);
-  color: #0b0f1a;
-  font-size: 0.82rem;
-  font-weight: 700;
-  border-radius: 50px;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: none;
-}
-.copied-toast.show { opacity: 1; transform: translateY(0); }
-
-/* ---------- FAQ ---------- */
-.faq-section { padding: 80px 0; background: var(--clr-surface); }
-.faq-list { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-.faq-item {
-  background: var(--clr-bg);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  transition: var(--transition);
-}
-.faq-item[open] { border-color: rgba(74,222,128,0.25); }
-.faq-item summary {
-  list-style: none;
-  padding: 18px 22px;
-  cursor: pointer;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.97rem;
-  color: var(--clr-heading);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
-}
-.faq-item summary::-webkit-details-marker { display: none; }
-.faq-item summary::after {
-  content: '+';
-  font-size: 1.2rem;
-  color: var(--clr-accent);
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
-}
-.faq-item[open] summary::after { transform: rotate(45deg); }
-.faq-item p {
-  padding: 0 22px 18px;
-  color: var(--clr-muted);
-  font-size: 0.92rem;
-  line-height: 1.7;
-  border-top: 1px solid var(--clr-border);
-  padding-top: 14px;
-}
-
-/* ---------- CTA SECTION ---------- */
-.cta-section {
-  padding: 80px 0;
-  background: linear-gradient(135deg, #0b0f1a 0%, #0d1a12 100%);
-  position: relative;
-  overflow: hidden;
-}
-.cta-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(74,222,128,0.07) 0%, transparent 70%);
-  pointer-events: none;
-}
-.cta-inner {
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-.cta-inner h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); margin-bottom: 14px; }
-.cta-inner > p { color: var(--clr-muted); max-width: 480px; margin: 0 auto 36px; }
-.cta-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
-  max-width: 640px;
-  margin: 0 auto;
-}
-.cta-form input {
-  flex: 1 1 200px;
-  max-width: 280px;
-}
-.cta-note { color: var(--clr-accent); font-size: 0.88rem; margin-top: 14px; min-height: 1.2em; }
-
-/* ---------- FOOTER ---------- */
-.footer {
-  background: #070b14;
-  border-top: 1px solid var(--clr-border);
-  padding-top: 60px;
-}
-.footer-inner {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 40px;
-  padding-bottom: 48px;
-}
-.footer-brand .nav-logo { margin-bottom: 14px; display: inline-flex; }
-.footer-brand p { font-size: 0.87rem; color: var(--clr-muted); max-width: 280px; line-height: 1.7; }
-.footer-links-group h4 {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--clr-muted);
-  margin-bottom: 16px;
-}
-.footer-links-group ul { display: flex; flex-direction: column; gap: 10px; }
-.footer-links-group a { font-size: 0.88rem; color: var(--clr-muted); transition: color 0.2s ease; }
-.footer-links-group a:hover { color: var(--clr-accent); }
-
-.footer-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 0;
-  border-top: 1px solid var(--clr-border);
-  font-size: 0.82rem;
-  color: var(--clr-muted);
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 900px) {
-  .footer-inner { grid-template-columns: 1fr 1fr; }
-  .footer-brand { grid-column: 1 / -1; }
-}
-
-@media (max-width: 680px) {
-  .nav-links { display: none; }
-  .nav-links.open {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    right: 0;
-    background: rgba(11,15,26,0.98);
-    backdrop-filter: blur(16px);
-    padding: 20px;
-    border-bottom: 1px solid var(--clr-border);
-    z-index: 999;
-    gap: 4px;
-    animation: fadeUp 0.2s ease;
-  }
-  .hamburger { display: flex; }
-  .nav-cta { display: none; }
-
-  .hero { padding: 70px 0 60px; }
-  .hero-stats { gap: 20px; flex-wrap: wrap; }
-
-  .tool-cards-grid { grid-template-columns: 1fr; }
-  .text-stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .pw-checks { grid-template-columns: 1fr; }
-  .palette-wrap { flex-direction: row; }
-  .pal-swatch { height: 100px; }
-  .qr-options-row { flex-direction: column; }
-
-  .footer-inner { grid-template-columns: 1fr; }
-  .footer-bottom { flex-direction: column; text-align: center; }
-  .cta-form { flex-direction: column; align-items: center; }
-  .cta-form input { max-width: 100%; }
-}
-
-@media (max-width: 400px) {
-  .text-stats-grid { grid-template-columns: 1fr 1fr; }
-  .caption-cats { gap: 6px; }
-  .cat-btn { font-size: 0.76rem; padding: 6px 10px; }
-}
-    </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
- 
-  <!-- ======================== NAVBAR ======================== -->
-  <header class="navbar" id="navbar">
-    <nav class="nav-inner container">
-      <a href="#" class="nav-logo">
-        <span class="logo-icon">⚡</span>
-        <span>Grabsel<strong>Tools</strong></span>
-      </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#tools">Tools</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="nav-cta" onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">Try Free</button>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
-  </header>
- 
-  <!-- ======================== HERO ======================== -->
-  <section class="hero" id="home">
-    <div class="hero-bg-shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-    </div>
-    <div class="container hero-inner">
-      <div class="hero-badge">✦ 100% Free · No Sign-Up Required</div>
-      <h1 class="hero-title">Free Online Tools That<br /><em>Make Your Life Easier</em></h1>
-      <p class="hero-sub">A curated collection of fast, browser-based utilities — password generators, QR codes, text analyzers, caption creators and more. No ads in your workflow, no accounts needed.</p>
-      <div class="hero-actions">
-        <button class="btn-primary" onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">Start Using Tools</button>
-        <a href="#features" class="btn-ghost">See What's Inside ↓</a>
+
+<!-- ═══════════════════════════════════════════ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="showPage('home')">
+      <span class="logo-icon">🌐</span>
+      <span class="logo-text">Grabsel</span>
+    </a>
+    <div class="nav-right">
+      <div id="nav-auth-btns" class="nav-auth">
+        <button class="btn btn-ghost" onclick="showModal('login')">Log in</button>
+        <button class="btn btn-primary" onclick="showModal('signup')">Sign up</button>
       </div>
-      <div class="hero-stats">
-        <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Tools</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-num">Free</span><span class="stat-label">Forever</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-num">0</span><span class="stat-label">Sign-ups</span></div>
+      <div id="nav-user" class="nav-user hidden">
+        <span class="nav-username" id="nav-username-text"></span>
+        <div class="nav-avatar-wrap" id="nav-avatar-btn">
+          <img id="nav-avatar" src="" alt="" class="nav-avatar" />
+          <span id="nav-avatar-fallback" class="nav-avatar-fallback"></span>
+        </div>
+        <div class="nav-dropdown hidden" id="nav-dropdown">
+          <a class="dropdown-item" onclick="showProfileSettings()">⚙️ Edit Profile</a>
+          <a class="dropdown-item" onclick="signOut()">🚪 Sign out</a>
+        </div>
       </div>
-    </div>
-  </section>
- 
-  <!-- ======================== TOP AD BANNER ======================== -->
-  <div class="ad-banner container" aria-label="Advertisement">
-    <div class="ad-inner">
-      <span class="ad-label">Advertisement</span>
-      <!-- Replace with real AdSense code -->
-      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX" data-ad-format="auto"></ins> -->
-      <div class="ad-placeholder">[ Google AdSense – Top Banner 728×90 ]</div>
     </div>
   </div>
- 
-  <!-- ======================== FEATURES ======================== -->
-  <section class="features-strip" id="features">
-    <div class="container features-grid">
-      <div class="feat-card">
-        <div class="feat-icon">🔒</div>
-        <div>
-          <h3>Privacy First</h3>
-          <p>All processing happens in your browser. Nothing is sent to any server.</p>
-        </div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">⚡</div>
-        <div>
-          <h3>Lightning Fast</h3>
-          <p>Pure vanilla JavaScript — instant results, zero loading spinners.</p>
-        </div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">📱</div>
-        <div>
-          <h3>Mobile Ready</h3>
-          <p>Fully responsive and touch-friendly on every device.</p>
-        </div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🎁</div>
-        <div>
-          <h3>Always Free</h3>
-          <p>No paywalls, no subscriptions. Every tool is free forever.</p>
-        </div>
-      </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════ HOME PAGE ═══ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <h1 class="hero-title font-display">Talk to the <span class="gradient-text">World</span></h1>
+    <p class="hero-sub">Pick a country. Choose a room. Start chatting — no nonsense.</p>
+  </div>
+
+  <div class="container">
+    <!-- Search -->
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input id="search-input" class="search-input" type="text" placeholder="Search any country…" oninput="filterCountries(this.value)" />
+      <button class="search-clear hidden" id="search-clear" onclick="clearSearch()">✕</button>
     </div>
-  </section>
- 
-  <!-- ======================== TOOLS SECTION ======================== -->
-  <main class="tools-section" id="tools">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Our Tools</span>
-        <h2>Everything You Need, Right Here</h2>
-        <p>Click any tool to open it instantly — no page reloads, no sign-ups.</p>
-      </div>
- 
-      <!-- Tool Cards Grid -->
-      <div class="tool-cards-grid">
- 
-        <!-- TOOL 1: Password Generator -->
-        <article class="tool-card" id="card-password">
-          <div class="tool-card-header" onclick="toggleTool('password')">
-            <div class="tool-card-icon" style="--icon-bg:#e8f5e9;--icon-color:#2e7d32">🔑</div>
-            <div class="tool-card-meta">
-              <h2 class="tool-card-title">Password Generator</h2>
-              <p class="tool-card-desc">Create strong, secure passwords instantly with custom rules.</p>
-            </div>
-            <div class="tool-card-toggle" id="toggle-password">▼</div>
-          </div>
-          <div class="tool-card-body" id="body-password">
-            <div class="tool-inner">
-              <div class="pw-output-wrap">
-                <input type="text" id="pwOutput" class="pw-output" readonly placeholder="Your password appears here..." aria-label="Generated password" />
-                <button class="copy-btn" id="pwCopyBtn" onclick="copyPassword()" title="Copy password">⎘</button>
-              </div>
-              <div class="pw-strength-bar-wrap">
-                <div class="pw-strength-bar" id="pwStrengthBar"></div>
-              </div>
-              <span class="pw-strength-label" id="pwStrengthLabel">Generate a password to see strength</span>
- 
-              <div class="pw-controls">
-                <div class="pw-range-wrap">
-                  <label for="pwLength">Length: <strong id="pwLengthVal">16</strong></label>
-                  <input type="range" id="pwLength" min="6" max="64" value="16" oninput="document.getElementById('pwLengthVal').textContent=this.value" />
-                </div>
-                <div class="pw-checks">
-                  <label class="check-label"><input type="checkbox" id="pwUpper" checked /> Uppercase (A-Z)</label>
-                  <label class="check-label"><input type="checkbox" id="pwLower" checked /> Lowercase (a-z)</label>
-                  <label class="check-label"><input type="checkbox" id="pwNumbers" checked /> Numbers (0-9)</label>
-                  <label class="check-label"><input type="checkbox" id="pwSymbols" /> Symbols (!@#$)</label>
-                </div>
-              </div>
-              <button class="btn-tool" onclick="generatePassword()">🔑 Generate Password</button>
-              <div class="copied-toast" id="pwToast">Copied!</div>
-            </div>
-          </div>
-        </article>
- 
-        <!-- TOOL 2: QR Code Generator -->
-        <article class="tool-card" id="card-qr">
-          <div class="tool-card-header" onclick="toggleTool('qr')">
-            <div class="tool-card-icon" style="--icon-bg:#e3f2fd;--icon-color:#1565c0">📷</div>
-            <div class="tool-card-meta">
-              <h2 class="tool-card-title">QR Code Generator</h2>
-              <p class="tool-card-desc">Turn any text or URL into a scannable QR code.</p>
-            </div>
-            <div class="tool-card-toggle" id="toggle-qr">▼</div>
-          </div>
-          <div class="tool-card-body" id="body-qr">
-            <div class="tool-inner">
-              <div class="input-group">
-                <label for="qrInput">Enter Text or URL</label>
-                <textarea id="qrInput" rows="3" placeholder="https://grabsel.tools or any text…" aria-label="QR code content"></textarea>
-              </div>
-              <div class="qr-options-row">
-                <div class="input-group-sm">
-                  <label for="qrSize">Size</label>
-                  <select id="qrSize">
-                    <option value="128">Small (128px)</option>
-                    <option value="200" selected>Medium (200px)</option>
-                    <option value="300">Large (300px)</option>
-                  </select>
-                </div>
-                <div class="input-group-sm">
-                  <label for="qrColor">Color</label>
-                  <input type="color" id="qrColor" value="#111827" />
-                </div>
-              </div>
-              <button class="btn-tool" onclick="generateQR()">📷 Generate QR Code</button>
-              <div class="qr-preview" id="qrPreview"></div>
-              <button class="btn-tool-outline" id="qrDownload" style="display:none" onclick="downloadQR()">⬇ Download QR Code</button>
-            </div>
-          </div>
-        </article>
- 
-        <!-- TOOL 3: Text Analyzer -->
-        <article class="tool-card" id="card-text">
-          <div class="tool-card-header" onclick="toggleTool('text')">
-            <div class="tool-card-icon" style="--icon-bg:#fce4ec;--icon-color:#880e4f">📝</div>
-            <div class="tool-card-meta">
-              <h2 class="tool-card-title">Text Analyzer</h2>
-              <p class="tool-card-desc">Instant word count, reading time, sentences and more.</p>
-            </div>
-            <div class="tool-card-toggle" id="toggle-text">▼</div>
-          </div>
-          <div class="tool-card-body" id="body-text">
-            <div class="tool-inner">
-              <div class="input-group">
-                <label for="textInput">Paste your text below</label>
-                <textarea id="textInput" rows="6" placeholder="Start typing or paste your content here…" oninput="analyzeText()" aria-label="Text to analyze"></textarea>
-              </div>
-              <div class="text-stats-grid">
-                <div class="text-stat-card"><span class="ts-num" id="wordCount">0</span><span class="ts-label">Words</span></div>
-                <div class="text-stat-card"><span class="ts-num" id="charCount">0</span><span class="ts-label">Characters</span></div>
-                <div class="text-stat-card"><span class="ts-num" id="charNoSpace">0</span><span class="ts-label">Chars (no space)</span></div>
-                <div class="text-stat-card"><span class="ts-num" id="sentCount">0</span><span class="ts-label">Sentences</span></div>
-                <div class="text-stat-card"><span class="ts-num" id="paraCount">0</span><span class="ts-label">Paragraphs</span></div>
-                <div class="text-stat-card"><span class="ts-num" id="readTime">0 min</span><span class="ts-label">Read Time</span></div>
-              </div>
-              <div class="freq-section">
-                <h4>Top Keywords</h4>
-                <div class="freq-tags" id="freqTags"></div>
-              </div>
-            </div>
-          </div>
-        </article>
- 
-        <!-- TOOL 4: Instagram Caption Generator -->
-        <article class="tool-card" id="card-caption">
-          <div class="tool-card-header" onclick="toggleTool('caption')">
-            <div class="tool-card-icon" style="--icon-bg:#f3e5f5;--icon-color:#6a1b9a">📸</div>
-            <div class="tool-card-meta">
-              <h2 class="tool-card-title">Caption Generator</h2>
-              <p class="tool-card-desc">Grab stunning Instagram captions across 8 categories.</p>
-            </div>
-            <div class="tool-card-toggle" id="toggle-caption">▼</div>
-          </div>
-          <div class="tool-card-body" id="body-caption">
-            <div class="tool-inner">
-              <div class="caption-cats">
-                <button class="cat-btn active" data-cat="motivational" onclick="selectCat(this)">💪 Motivational</button>
-                <button class="cat-btn" data-cat="travel" onclick="selectCat(this)">✈️ Travel</button>
-                <button class="cat-btn" data-cat="food" onclick="selectCat(this)">🍕 Food</button>
-                <button class="cat-btn" data-cat="selfie" onclick="selectCat(this)">🤳 Selfie</button>
-                <button class="cat-btn" data-cat="funny" onclick="selectCat(this)">😂 Funny</button>
-                <button class="cat-btn" data-cat="nature" onclick="selectCat(this)">🌿 Nature</button>
-                <button class="cat-btn" data-cat="business" onclick="selectCat(this)">💼 Business</button>
-                <button class="cat-btn" data-cat="love" onclick="selectCat(this)">❤️ Love</button>
-              </div>
-              <button class="btn-tool" onclick="generateCaption()">✨ Generate Caption</button>
-              <div class="caption-output" id="captionOutput" style="display:none">
-                <p id="captionText"></p>
-                <div class="caption-hashtags" id="captionHashtags"></div>
-                <button class="copy-inline-btn" onclick="copyCaption()">⎘ Copy Caption</button>
-              </div>
-              <div class="copied-toast" id="captionToast">Copied!</div>
-            </div>
-          </div>
-        </article>
- 
-        <!-- MIDDLE AD BANNER -->
-        <div class="tool-card ad-card" aria-label="Advertisement">
-          <div class="ad-inner">
-            <span class="ad-label">Sponsored</span>
-            <!-- Replace with real AdSense code -->
-            <div class="ad-placeholder">[ Google AdSense – Mid Banner 300×250 ]</div>
-          </div>
-        </div>
- 
-        <!-- TOOL 5: Color Palette Generator -->
-        <article class="tool-card" id="card-color">
-          <div class="tool-card-header" onclick="toggleTool('color')">
-            <div class="tool-card-icon" style="--icon-bg:#fff3e0;--icon-color:#e65100">🎨</div>
-            <div class="tool-card-meta">
-              <h2 class="tool-card-title">Color Palette Generator</h2>
-              <p class="tool-card-desc">Generate beautiful 5-color palettes and copy hex codes.</p>
-            </div>
-            <div class="tool-card-toggle" id="toggle-color">▼</div>
-          </div>
-          <div class="tool-card-body" id="body-color">
-            <div class="tool-inner">
-              <div class="color-mode-row">
-                <label for="colorMode">Palette Style</label>
-                <select id="colorMode">
-                  <option value="random">Random Vivid</option>
-                  <option value="pastel">Soft Pastel</option>
-                  <option value="dark">Dark & Moody</option>
-                  <option value="earth">Earth Tones</option>
-                  <option value="mono">Monochromatic</option>
-                </select>
-              </div>
-              <button class="btn-tool" onclick="generatePalette()">🎨 Generate Palette</button>
-              <div class="palette-wrap" id="paletteWrap"></div>
-              <button class="btn-tool-outline" id="palCopyAll" style="display:none" onclick="copyAllColors()">⎘ Copy All Hex Codes</button>
-              <div class="copied-toast" id="palToast">All colors copied!</div>
-            </div>
-          </div>
-        </article>
- 
-      </div><!-- /tool-cards-grid -->
+
+    <!-- Trending -->
+    <div class="section-header">
+      <h2 class="section-title">🔥 Trending</h2>
     </div>
-  </main>
- 
-  <!-- ======================== FAQ ======================== -->
-  <section class="faq-section" id="faq">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">FAQ</span>
-        <h2>Frequently Asked Questions</h2>
-      </div>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>Are these tools really free?</summary>
-          <p>Yes — completely free, forever. No subscription, no credit card, no sign-up required.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Do you store my data?</summary>
-          <p>No. All tools run entirely in your browser. We never transmit or store any input you provide.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Can I use Grabsel Tools on mobile?</summary>
-          <p>Absolutely. The site is designed mobile-first and works on any modern smartphone or tablet.</p>
-        </details>
-        <details class="faq-item">
-          <summary>How many tools will you add?</summary>
-          <p>We're constantly adding new tools based on user requests. Bookmark this page and check back often.</p>
-        </details>
-        <details class="faq-item">
-          <summary>Can I suggest a tool?</summary>
-          <p>Yes! Use the contact section below to send us your ideas — we love hearing from users.</p>
-        </details>
-      </div>
+    <div class="trending-row" id="trending-row"></div>
+
+    <!-- Continent tabs -->
+    <div class="tabs" id="continent-tabs">
+      <button class="tab active" onclick="filterContinent('All', this)">All</button>
+      <button class="tab" onclick="filterContinent('Europe', this)">🌍 Europe</button>
+      <button class="tab" onclick="filterContinent('Asia', this)">🌏 Asia</button>
+      <button class="tab" onclick="filterContinent('Americas', this)">🌎 Americas</button>
+      <button class="tab" onclick="filterContinent('Africa', this)">Africa</button>
+      <button class="tab" onclick="filterContinent('Oceania', this)">Oceania</button>
     </div>
-  </section>
- 
-  <!-- ======================== BOTTOM AD BANNER ======================== -->
-  <div class="ad-banner container" aria-label="Advertisement">
-    <div class="ad-inner">
-      <span class="ad-label">Advertisement</span>
-      <!-- Replace with real AdSense code -->
-      <div class="ad-placeholder">[ Google AdSense – Bottom Banner 728×90 ]</div>
+
+    <!-- Country grid -->
+    <div class="country-grid" id="country-grid"></div>
+    <div class="empty-state hidden" id="empty-state">
+      <p>No countries found for "<span id="empty-query"></span>"</p>
     </div>
   </div>
- 
-  <!-- ======================== CONTACT / CTA ======================== -->
-  <section class="cta-section" id="contact">
-    <div class="container cta-inner">
-      <h2>Have a Tool Idea?</h2>
-      <p>We're always looking for useful tools to add. Drop us a message and we'll consider it for the next update.</p>
-      <div class="cta-form">
-        <input type="email" placeholder="Your email address" aria-label="Your email" />
-        <input type="text" placeholder="Describe the tool you'd like…" aria-label="Tool suggestion" />
-        <button class="btn-primary" onclick="handleSuggest(event)">Send Suggestion</button>
-      </div>
-      <p class="cta-note" id="ctaNote"></p>
-    </div>
-  </section>
- 
-  <!-- ======================== FOOTER ======================== -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <a href="#" class="nav-logo">
-          <span class="logo-icon">⚡</span>
-          <span>Grabsel<strong>Tools</strong></span>
-        </a>
-        <p>Free browser-based tools for everyone. No sign-up. No data collection. No nonsense.</p>
-      </div>
-      <div class="footer-links-group">
-        <h4>Tools</h4>
-        <ul>
-          <li><a href="#card-password" onclick="openTool('password')">Password Generator</a></li>
-          <li><a href="#card-qr" onclick="openTool('qr')">QR Code Generator</a></li>
-          <li><a href="#card-text" onclick="openTool('text')">Text Analyzer</a></li>
-          <li><a href="#card-caption" onclick="openTool('caption')">Caption Generator</a></li>
-          <li><a href="#card-color" onclick="openTool('color')">Color Palette</a></li>
-        </ul>
-      </div>
-      <div class="footer-links-group">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="#">Advertise</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ COUNTRY PAGE ═══ -->
+<div id="page-country" class="page">
+  <div class="container">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="country-header">
+      <span class="country-flag-big" id="country-flag-big"></span>
+      <div>
+        <h1 class="country-name-big font-display" id="country-name-big"></h1>
+        <p class="country-sub">Choose a chat room</p>
       </div>
     </div>
-    <div class="footer-bottom container">
-      <p>© 2025 GrabselTools. All rights reserved.</p>
-      <p>Made with ♥ for the open web.</p>
+    <div class="room-cards">
+      <div class="room-card" onclick="openRoom('politics')">
+        <div class="room-icon">🏛️</div>
+        <div class="room-info">
+          <h3 class="room-title">Politics</h3>
+          <p class="room-desc">Current events, governance & debate</p>
+        </div>
+        <span class="room-arrow">→</span>
+      </div>
+      <div class="room-card" onclick="openRoom('dating')">
+        <div class="room-icon">💘</div>
+        <div class="room-info">
+          <h3 class="room-title">Dating</h3>
+          <p class="room-desc">Meet people & make connections</p>
+        </div>
+        <span class="room-arrow">→</span>
+      </div>
+      <div class="room-card" onclick="openRoom('gaming')">
+        <div class="room-icon">🎮</div>
+        <div class="room-info">
+          <h3 class="room-title">Gaming</h3>
+          <p class="room-desc">Talk games, find teammates</p>
+        </div>
+        <span class="room-arrow">→</span>
+      </div>
     </div>
-  </footer>
-    
-    <script>
-        /* ============================================================
-   GRABSEL TOOLS – script.js
-   Production-grade Vanilla JS — no frameworks, no dependencies
-   ============================================================ */
+  </div>
+</div>
 
-'use strict';
+<!-- ═══════════════════════════════════════════ CHAT PAGE ═══ -->
+<div id="page-chat" class="page">
+  <div class="chat-layout">
+    <!-- Sidebar -->
+    <aside class="chat-sidebar" id="chat-sidebar">
+      <div class="sidebar-header">
+        <button class="back-btn-small" onclick="showPage('country')">← Back</button>
+        <div class="room-badge" id="sidebar-room-badge"></div>
+      </div>
+      <div class="sidebar-section">
+        <p class="sidebar-label">ONLINE NOW</p>
+        <div class="online-list" id="online-list"></div>
+      </div>
+    </aside>
 
-/* ============================================================
-   HELPERS
-   ============================================================ */
-const $ = (id) => document.getElementById(id);
-const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    <!-- Chat main -->
+    <main class="chat-main">
+      <div class="chat-topbar">
+        <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="chat-room-info">
+          <span class="chat-room-icon" id="chat-room-icon"></span>
+          <span class="chat-room-name font-display" id="chat-room-name"></span>
+          <span class="chat-country-tag" id="chat-country-tag"></span>
+        </div>
+        <span class="online-count" id="online-count-badge"></span>
+      </div>
 
-function showToast(toastId, delay = 1800) {
-  const el = $(toastId);
-  if (!el) return;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), delay);
-}
+      <div class="messages-wrap" id="messages-wrap">
+        <div class="messages" id="messages"></div>
+      </div>
 
-async function copyToClipboard(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    // Fallback
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    return true;
-  }
-}
+      <div class="typing-area" id="typing-area"></div>
 
-/* ============================================================
-   NAVBAR – scroll effect & mobile hamburger
-   ============================================================ */
-const navbar = $('navbar');
-const hamburger = $('hamburger');
-const navLinks = $('navLinks');
+      <div class="chat-input-wrap">
+        <button class="emoji-btn" id="emoji-btn" onclick="toggleEmojiPicker()">😊</button>
+        <div class="emoji-picker-wrap hidden" id="emoji-picker-wrap">
+          <div class="emoji-grid" id="emoji-grid"></div>
+        </div>
+        <input
+          id="chat-input"
+          class="chat-input"
+          type="text"
+          placeholder="Message…"
+          maxlength="500"
+          onkeydown="handleChatKey(event)"
+          oninput="handleTyping()"
+          autocomplete="off"
+        />
+        <button class="send-btn" onclick="sendMessage()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </div>
+    </main>
+  </div>
+</div>
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 30) navbar.classList.add('scrolled');
-  else navbar.classList.remove('scrolled');
-}, { passive: true });
+<!-- ═══════════════════════════════════════════ MODALS ═══ -->
+<!-- Backdrop -->
+<div class="modal-backdrop hidden" id="modal-backdrop" onclick="closeAllModals()"></div>
 
-hamburger && hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-  hamburger.classList.toggle('active');
-});
+<!-- Login Modal -->
+<div class="modal hidden" id="modal-login">
+  <div class="modal-header">
+    <h2 class="modal-title font-display">Welcome back</h2>
+    <button class="modal-close" onclick="closeAllModals()">✕</button>
+  </div>
+  <form onsubmit="handleLogin(event)">
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input id="login-username" class="form-input" type="text" placeholder="your_username" required autocomplete="username" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input id="login-password" class="form-input" type="password" placeholder="••••••••" required autocomplete="current-password" />
+    </div>
+    <div class="form-error hidden" id="login-error"></div>
+    <button type="submit" class="btn btn-primary btn-full" id="login-submit">Log in</button>
+  </form>
+  <p class="modal-switch">No account? <a onclick="showModal('signup')">Sign up</a></p>
+</div>
 
-// Close nav on link click (mobile)
-navLinks && navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    hamburger && hamburger.classList.remove('active');
-  });
-});
+<!-- Signup Modal -->
+<div class="modal hidden" id="modal-signup">
+  <div class="modal-header">
+    <h2 class="modal-title font-display">Create account</h2>
+    <button class="modal-close" onclick="closeAllModals()">✕</button>
+  </div>
+  <form onsubmit="handleSignup(event)">
+    <div class="form-group">
+      <label class="form-label">Display Name</label>
+      <input id="signup-name" class="form-input" type="text" placeholder="Your Name" required />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input id="signup-username" class="form-input" type="text" placeholder="username" required pattern="[a-zA-Z0-9_]{3,20}" title="3–20 characters, letters, numbers, underscores" />
+      <span class="form-hint">Letters, numbers, underscores. 3–20 chars.</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input id="signup-password" class="form-input" type="password" placeholder="••••••••" required minlength="6" autocomplete="new-password" />
+      <span class="form-hint">At least 6 characters.</span>
+    </div>
+    <div class="form-error hidden" id="signup-error"></div>
+    <button type="submit" class="btn btn-primary btn-full" id="signup-submit">Create account</button>
+  </form>
+  <p class="modal-switch">Have an account? <a onclick="showModal('login')">Log in</a></p>
+</div>
 
-/* ============================================================
-   TOOL ACCORDION TOGGLE
-   ============================================================ */
-function toggleTool(name) {
-  const body   = $(`body-${name}`);
-  const toggle = $(`toggle-${name}`);
-  if (!body) return;
-  const isOpen = body.classList.contains('open');
-  body.classList.toggle('open', !isOpen);
-  toggle && toggle.classList.toggle('open', !isOpen);
-}
+<!-- Profile Settings Modal -->
+<div class="modal hidden" id="modal-profile">
+  <div class="modal-header">
+    <h2 class="modal-title font-display">Edit Profile</h2>
+    <button class="modal-close" onclick="closeAllModals()">✕</button>
+  </div>
+  <div class="profile-avatar-section">
+    <div class="profile-avatar-wrap" onclick="document.getElementById('avatar-upload').click()">
+      <img id="profile-preview" src="" alt="" class="profile-avatar-big hidden" />
+      <span id="profile-avatar-fallback" class="profile-avatar-fallback"></span>
+      <div class="avatar-overlay">📷</div>
+    </div>
+    <input id="avatar-upload" type="file" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)" />
+    <p class="avatar-hint">Click to upload photo</p>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Display Name</label>
+    <input id="profile-name" class="form-input" type="text" placeholder="Your Name" />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Twitter / X</label>
+    <input id="profile-twitter" class="form-input" type="text" placeholder="@handle" />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Instagram</label>
+    <input id="profile-instagram" class="form-input" type="text" placeholder="@handle" />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Discord</label>
+    <input id="profile-discord" class="form-input" type="text" placeholder="user#0000" />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Website</label>
+    <input id="profile-website" class="form-input" type="url" placeholder="https://yoursite.com" />
+  </div>
+  <div class="form-error hidden" id="profile-error"></div>
+  <button class="btn btn-primary btn-full" onclick="saveProfile()">Save changes</button>
+</div>
 
-function openTool(name) {
-  const body   = $(`body-${name}`);
-  const toggle = $(`toggle-${name}`);
-  if (!body) return;
-  body.classList.add('open');
-  toggle && toggle.classList.add('open');
-  // Scroll to card
-  const card = $(`card-${name}`);
-  if (card) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-}
+<!-- User Popup (click on avatar in chat) -->
+<div class="user-popup hidden" id="user-popup">
+  <button class="modal-close user-popup-close" onclick="closeUserPopup()">✕</button>
+  <div class="popup-avatar-wrap">
+    <img id="popup-avatar" src="" alt="" class="popup-avatar hidden" />
+    <span id="popup-avatar-fallback" class="popup-avatar-fallback"></span>
+  </div>
+  <p class="popup-name font-display" id="popup-name"></p>
+  <p class="popup-username" id="popup-username"></p>
+  <div class="popup-links" id="popup-links"></div>
+</div>
 
-/* ============================================================
-   TOOL 1: PASSWORD GENERATOR
-   ============================================================ */
-const CHARS = {
-  upper:   'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-  lower:   'abcdefghijklmnopqrstuvwxyz',
-  numbers: '0123456789',
-  symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
-};
+<!-- Auth-required toast (shown when guest tries to chat) -->
+<div class="auth-required-banner hidden" id="auth-banner">
+  <span>You need an account to chat.</span>
+  <button class="btn btn-primary btn-sm" onclick="showModal('signup')">Sign up free</button>
+  <button class="auth-banner-close" onclick="document.getElementById('auth-banner').classList.add('hidden')">✕</button>
+</div>
 
-function generatePassword() {
-  const length   = parseInt($('pwLength').value, 10);
-  const useUpper = $('pwUpper').checked;
-  const useLower = $('pwLower').checked;
-  const useNums  = $('pwNumbers').checked;
-  const useSyms  = $('pwSymbols').checked;
-
-  let pool = '';
-  let guaranteed = '';
-
-  if (useUpper)  { pool += CHARS.upper;   guaranteed += CHARS.upper[randomInt(0, CHARS.upper.length - 1)]; }
-  if (useLower)  { pool += CHARS.lower;   guaranteed += CHARS.lower[randomInt(0, CHARS.lower.length - 1)]; }
-  if (useNums)   { pool += CHARS.numbers; guaranteed += CHARS.numbers[randomInt(0, CHARS.numbers.length - 1)]; }
-  if (useSyms)   { pool += CHARS.symbols; guaranteed += CHARS.symbols[randomInt(0, CHARS.symbols.length - 1)]; }
-
-  if (!pool) { $('pwOutput').value = 'Please select at least one option.'; return; }
-
-  const remaining = length - guaranteed.length;
-  let pw = guaranteed;
-  for (let i = 0; i < remaining; i++) {
-    pw += pool[randomInt(0, pool.length - 1)];
-  }
-
-  // Shuffle
-  pw = pw.split('').sort(() => Math.random() - 0.5).join('');
-  $('pwOutput').value = pw;
-  renderStrength(pw);
-}
-
-function renderStrength(pw) {
-  let score = 0;
-  if (pw.length >= 8)  score++;
-  if (pw.length >= 16) score++;
-  if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
-  if (/[0-9]/.test(pw)) score++;
-  if (/[^A-Za-z0-9]/.test(pw)) score++;
-
-  const bar = $('pwStrengthBar');
-  const lbl = $('pwStrengthLabel');
-  const pct = (score / 5) * 100;
-  const colors = ['#ef4444','#f97316','#eab308','#22c55e','#10b981'];
-  const labels = ['Very Weak','Weak','Fair','Strong','Very Strong'];
-  bar.style.width = `${pct}%`;
-  bar.style.background = colors[score - 1] || '#ef4444';
-  lbl.textContent = `Strength: ${labels[score - 1] || 'Very Weak'}`;
-}
-
-async function copyPassword() {
-  const val = $('pwOutput').value;
-  if (!val || val === 'Please select at least one option.') return;
-  await copyToClipboard(val);
-  showToast('pwToast');
-}
-
-/* ============================================================
-   TOOL 2: QR CODE GENERATOR
-   ============================================================ */
-let qrInstance = null;
-
-function generateQR() {
-  const text  = $('qrInput').value.trim();
-  const size  = parseInt($('qrSize').value, 10);
-  const color = $('qrColor').value;
-  const wrap  = $('qrPreview');
-
-  if (!text) { alert('Please enter some text or a URL.'); return; }
-
-  // Clear previous
-  wrap.innerHTML = '';
-  qrInstance = null;
-
-  if (typeof QRCode === 'undefined') {
-    // Fallback: use a free QR API
-    const img = document.createElement('img');
-    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(text)}&color=${color.replace('#','')}`;
-    img.alt = 'QR Code';
-    img.style.maxWidth = size + 'px';
-    wrap.appendChild(img);
-    $('qrDownload').style.display = 'block';
-    return;
-  }
-
-  qrInstance = new QRCode(wrap, {
-    text,
-    width:  size,
-    height: size,
-    colorDark:  color,
-    colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.H
-  });
-
-  $('qrDownload').style.display = 'block';
-}
-
-function downloadQR() {
-  const canvas = $('qrPreview').querySelector('canvas');
-  const img    = $('qrPreview').querySelector('img');
-  if (canvas) {
-    const link = document.createElement('a');
-    link.download = 'qrcode-grabseltools.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-  } else if (img) {
-    const link = document.createElement('a');
-    link.href = img.src;
-    link.download = 'qrcode-grabseltools.png';
-    link.target = '_blank';
-    link.click();
-  }
-}
-
-/* ============================================================
-   TOOL 3: TEXT ANALYZER
-   ============================================================ */
-function analyzeText() {
-  const text = $('textInput').value;
-
-  const words      = text.trim() === '' ? [] : text.trim().split(/\s+/);
-  const chars      = text.length;
-  const charsNoSp  = text.replace(/\s/g, '').length;
-  const sentences  = text.trim() === '' ? 0 : (text.match(/[^\.!\?]+[\.!\?]+/g) || []).length || (text.trim().length > 0 ? 1 : 0);
-  const paras      = text.trim() === '' ? 0 : text.split(/\n{2,}/).filter(p => p.trim()).length || (text.trim().length > 0 ? 1 : 0);
-  const wpm        = 200;
-  const readMins   = Math.ceil(words.length / wpm);
-
-  $('wordCount').textContent  = words.length;
-  $('charCount').textContent  = chars;
-  $('charNoSpace').textContent = charsNoSp;
-  $('sentCount').textContent  = sentences;
-  $('paraCount').textContent  = paras;
-  $('readTime').textContent   = words.length === 0 ? '0 min' : readMins < 1 ? '< 1 min' : `${readMins} min`;
-
-  renderFrequency(words);
-}
-
-function renderFrequency(words) {
-  const STOPWORDS = new Set(['the','a','an','and','or','but','is','in','on','at','to','for','of','with','it','this','that','as','are','was','be','have','has','had','by','from','not','we','i','you','he','she','they','do','did','will','can','could','would','should']);
-  const freq = {};
-  words.forEach(w => {
-    const clean = w.toLowerCase().replace(/[^a-z0-9]/g, '');
-    if (clean && clean.length > 2 && !STOPWORDS.has(clean)) {
-      freq[clean] = (freq[clean] || 0) + 1;
-    }
-  });
-
-  const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10);
-  const wrap = $('freqTags');
-  wrap.innerHTML = '';
-  sorted.forEach(([word, count]) => {
-    const tag = document.createElement('span');
-    tag.className = 'freq-tag';
-    tag.innerHTML = `${word} <span class="freq-count">${count}</span>`;
-    wrap.appendChild(tag);
-  });
-}
-
-/* ============================================================
-   TOOL 4: INSTAGRAM CAPTION GENERATOR
-   ============================================================ */
-const CAPTIONS = {
-  motivational: [
-    { text: "Every day is a new chance to rewrite your story. Keep going — the best chapter is still ahead. 🌟", tags: ["motivation","mindset","inspiration","growthmindset","believeinyourself"] },
-    { text: "You didn't come this far to only come this far. Push through, keep rising. 💪", tags: ["hustle","keepgoing","motivated","success","hardwork"] },
-    { text: "Small steps every day lead to massive results over time. Trust the process. 🔥", tags: ["progress","consistency","dailymotivation","winning","goalsetter"] },
-    { text: "Be the energy you want to attract. Show up, glow up, never give up. ✨", tags: ["positivevibes","selfgrowth","manifestation","mindsetshift","dreambig"] },
-    { text: "The only bad workout is the one that didn't happen. Get after it! 💥", tags: ["fitness","workout","gains","fitnessjourney","nodaysoff"] },
-  ],
-  travel: [
-    { text: "Not all those who wander are lost — some just found a better route. ✈️", tags: ["travel","wanderlust","adventure","explore","travelgram"] },
-    { text: "Collect moments, not things. Your passport is the best investment you'll ever make. 🌍", tags: ["travelblogger","adventure","worldtravel","instatravel","travelphoto"] },
-    { text: "Life is short and the world is wide. Start planning your next escape. 🗺️", tags: ["traveling","bucketlist","globetrotter","traveldiaries","explore"] },
-    { text: "I need six months of vacation, twice a year. Who's with me? 🏖️", tags: ["beach","vacation","travellife","getaway","sunkissed"] },
-    { text: "Jet lag is for amateurs. Real travelers call it time-zone chasing. 🌐", tags: ["travelhacks","flightlife","worldtraveler","frequent flyer","nomad"] },
-  ],
-  food: [
-    { text: "Good food, good mood. Repeat forever. 🍕🔥", tags: ["foodie","foodporn","instafood","yummy","eats"] },
-    { text: "I followed my heart and it led me to the kitchen. Zero regrets. 🍳", tags: ["homecooking","foodlover","chefmode","delicious","cookingathome"] },
-    { text: "Calories don't count when you're genuinely happy. Just saying. 🍰", tags: ["treatyourself","dessertlover","foodgram","indulge","sweetlife"] },
-    { text: "A balanced diet is chocolate in both hands. 🍫", tags: ["chocolate","sweettooth","dessert","foodhumor","cheatday"] },
-    { text: "This meal didn't come with a serving suggestion. It came with a feeling. ✨", tags: ["foodstyling","finedining","platepresentation","foodart","foodphotography"] },
-  ],
-  selfie: [
-    { text: "I woke up like this. (Took me 45 minutes, but details.) ✨", tags: ["selfie","glow","selfieoftheday","ootd","selfconfidence"] },
-    { text: "Be your own kind of beautiful. Today, tomorrow, always. 💫", tags: ["selflove","confidence","beauty","glowup","beautiful"] },
-    { text: "Camera roll is full but memories are priceless. 📸", tags: ["portraitphotography","selfie","candid","goldenhour","lifestyle"] },
-    { text: "They said smile for the camera. The camera wasn't ready. 😎", tags: ["selfiemode","mood","vibes","ootd","fierce"] },
-    { text: "Not perfect, just authentic. And that's more than enough. 🤍", tags: ["authenticity","realme","selflove","nofilterneeded","confidence"] },
-  ],
-  funny: [
-    { text: "My bed is a magical place. As soon as the alarm goes off, I suddenly remember everything I had to do. 😅", tags: ["relatable","mood","adulting","funnylife","same"] },
-    { text: "I need a six-month vacation, twice a year. My therapist agrees. 🛋️", tags: ["humor","funnymemes","adulting","burnout","mood"] },
-    { text: "I run on coffee, chaos, and highly questionable decisions. ☕", tags: ["coffeeaddict","relatable","funny","mondaymood","vibes"] },
-    { text: "Not lazy, just in energy-saving mode. It's called sustainability. 🌱", tags: ["lazyday","mood","humor","chilling","weekendvibes"] },
-    { text: "Me: I should sleep early. Also me at 3am: watching cat videos. 🐱", tags: ["nightowl","insomnia","funnypost","relatable","procrastination"] },
-  ],
-  nature: [
-    { text: "In every walk with nature, one receives far more than they seek. 🌿", tags: ["nature","outdoors","hiking","earthlovers","getoutside"] },
-    { text: "The mountains are calling and I must go. No signal, no problem. 🏔️", tags: ["mountains","hiking","wilderness","adventureseeker","naturephotography"] },
-    { text: "Sunsets prove that endings can be beautiful too. 🌅", tags: ["sunset","goldenhour","nature","sky","peaceful"] },
-    { text: "Find me where the wild things are. Probably somewhere with trees and zero notifications. 🌲", tags: ["forestbathing","naturelover","offgrid","outdoorlife","treescape"] },
-    { text: "Breathe. Ground yourself. The earth has been here longer than any problem you have. 🌍", tags: ["mindfulness","nature","earthday","grounding","peace"] },
-  ],
-  business: [
-    { text: "Building something great? Good. Nobody remembers the person who played it safe. 💼", tags: ["entrepreneur","startup","hustle","business","buildinpublic"] },
-    { text: "Your brand is what people say about you when you leave the room. Make it count. 🚀", tags: ["branding","marketing","businesstips","growyourbusiness","leadwithvalue"] },
-    { text: "Network is net worth. Invest in relationships as much as results. 🤝", tags: ["networking","businessgrowth","mindset","entrepreneur","success"] },
-    { text: "The best marketing strategy? Genuinely help people. Revenue follows. 📈", tags: ["contentmarketing","digital","socialmediatips","growthstrategy","ROI"] },
-    { text: "Done is better than perfect. Ship it, learn from it, improve it. Repeat. ⚙️", tags: ["productlaunch","startuplife","mvp","agile","techfounder"] },
-  ],
-  love: [
-    { text: "You are my favorite notification. 💌", tags: ["love","couplegoals","relationship","soulmate","lovequotes"] },
-    { text: "Home is wherever I'm with you. Simple as that. 🏡❤️", tags: ["lovelife","couple","forever","togetherness","mypeople"] },
-    { text: "Love is not about finding the perfect person, it's about seeing an imperfect person perfectly. 💕", tags: ["relationship","loveisreal","couplegoals","truelove","heartfelt"] },
-    { text: "Every love story is beautiful, but ours is my favorite chapter. 📖", tags: ["lovestory","anniversary","romance","couple","blessed"] },
-    { text: "You had me at 'I ordered extra fries for you.' 🍟❤️", tags: ["foodandlove","funnycouple","relationship","goals","couplehumor"] },
-  ],
-};
-
-let currentCat = 'motivational';
-let lastCaptionIdx = -1;
-
-function selectCat(btn) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentCat = btn.dataset.cat;
-  lastCaptionIdx = -1;
-  $('captionOutput').style.display = 'none';
-}
-
-function generateCaption() {
-  const pool = CAPTIONS[currentCat] || CAPTIONS.motivational;
-  let idx;
-  do { idx = randomInt(0, pool.length - 1); } while (idx === lastCaptionIdx && pool.length > 1);
-  lastCaptionIdx = idx;
-
-  const item = pool[idx];
-  $('captionText').textContent = item.text;
-
-  const tagsWrap = $('captionHashtags');
-  tagsWrap.innerHTML = '';
-  item.tags.forEach(t => {
-    const span = document.createElement('span');
-    span.className = 'hash-tag';
-    span.textContent = `#${t}`;
-    tagsWrap.appendChild(span);
-  });
-
-  $('captionOutput').style.display = 'block';
-}
-
-async function copyCaption() {
-  const text = $('captionText').textContent;
-  const tags = [...$('captionHashtags').querySelectorAll('.hash-tag')].map(s => s.textContent).join(' ');
-  await copyToClipboard(`${text}\n\n${tags}`);
-  showToast('captionToast');
-}
-
-/* ============================================================
-   TOOL 5: COLOR PALETTE GENERATOR
-   ============================================================ */
-function hslToHex(h, s, l) {
-  s /= 100; l /= 100;
-  const a = s * Math.min(l, 1 - l);
-  const f = n => {
-    const k = (n + h / 30) % 12;
-    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color).toString(16).padStart(2, '0');
-  };
-  return `#${f(0)}${f(8)}${f(4)}`;
-}
-
-function generatePalette() {
-  const mode = $('colorMode').value;
-  const colors = [];
-
-  if (mode === 'mono') {
-    const hue = randomInt(0, 360);
-    for (let i = 0; i < 5; i++) {
-      colors.push(hslToHex(hue, randomInt(40, 80), 20 + i * 14));
-    }
-  } else if (mode === 'pastel') {
-    for (let i = 0; i < 5; i++) {
-      colors.push(hslToHex(randomInt(0, 360), randomInt(30, 60), randomInt(75, 92)));
-    }
-  } else if (mode === 'dark') {
-    for (let i = 0; i < 5; i++) {
-      colors.push(hslToHex(randomInt(0, 360), randomInt(20, 70), randomInt(8, 28)));
-    }
-  } else if (mode === 'earth') {
-    const earthHues = [28, 35, 45, 18, 55, 200, 140, 22];
-    for (let i = 0; i < 5; i++) {
-      const h = earthHues[randomInt(0, earthHues.length - 1)];
-      colors.push(hslToHex(h, randomInt(25, 55), randomInt(25, 60)));
-    }
-  } else {
-    // random vivid
-    for (let i = 0; i < 5; i++) {
-      colors.push(hslToHex(randomInt(0, 360), randomInt(55, 90), randomInt(40, 65)));
-    }
-  }
-
-  renderPalette(colors);
-}
-
-function renderPalette(colors) {
-  const wrap = $('paletteWrap');
-  wrap.innerHTML = '';
-
-  colors.forEach(hex => {
-    const swatch = document.createElement('div');
-    swatch.className = 'pal-swatch';
-    swatch.style.background = hex;
-
-    const badge = document.createElement('span');
-    badge.className = 'pal-copied-badge';
-    badge.textContent = 'Copied!';
-
-    const label = document.createElement('span');
-    label.className = 'pal-hex';
-    label.textContent = hex.toUpperCase();
-
-    swatch.appendChild(badge);
-    swatch.appendChild(label);
-    swatch.dataset.hex = hex;
-
-    swatch.addEventListener('click', async () => {
-      await copyToClipboard(hex.toUpperCase());
-      swatch.classList.add('copied');
-      setTimeout(() => swatch.classList.remove('copied'), 1400);
-    });
-
-    wrap.appendChild(swatch);
-  });
-
-  $('palCopyAll').style.display = 'block';
-  // Store for copy-all
-  wrap.dataset.colors = JSON.stringify(colors);
-}
-
-async function copyAllColors() {
-  const wrap = $('paletteWrap');
-  const colors = JSON.parse(wrap.dataset.colors || '[]');
-  if (!colors.length) return;
-  await copyToClipboard(colors.map(c => c.toUpperCase()).join(', '));
-  showToast('palToast');
-}
-
-/* ============================================================
-   CONTACT FORM SIMULATION
-   ============================================================ */
-function handleSuggest(e) {
-  e.preventDefault();
-  const note = $('ctaNote');
-  note.textContent = '✓ Thanks! We received your suggestion and will review it shortly.';
-  setTimeout(() => { note.textContent = ''; }, 5000);
-}
-
-/* ============================================================
-   INTERSECTION OBSERVER – animate elements on scroll
-   ============================================================ */
-const observerOpts = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' };
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.animation = 'fadeUp 0.55s ease both';
-      observer.unobserve(entry.target);
-    }
-  });
-}, observerOpts);
-
-document.querySelectorAll('.tool-card, .feat-card, .faq-item').forEach(el => {
-  el.style.opacity = '0';
-  observer.observe(el);
-});
-
-// Fix: ensure animated elements become visible
-setTimeout(() => {
-  document.querySelectorAll('.tool-card, .feat-card, .faq-item').forEach(el => {
-    el.style.opacity = '';
-  });
-}, 2000);
-
-/* ============================================================
-   INIT – open first tool by default
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-  // Auto-generate a password on load
-  generatePassword();
-  // Auto-generate a palette on load
-  generatePalette();
-});
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
 </body>
 </html>
