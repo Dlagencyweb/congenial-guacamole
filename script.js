@@ -297,7 +297,7 @@ function subscribeRealtime() {
        for (const msg of data) {
   const { data: profile } = await sb
     .from('profiles')
-    .select('*, profiles(username, avatar_url, display_name, social_links)')
+    .select('username, avatar_url, display_name, social_links')
     .eq('id', msg.user_id)
     .maybeSingle();
 
