@@ -269,17 +269,29 @@ function openRoom(room) {
 
 async function loadMessages() {
   const channel = roomId();
- const { data, error } = await sb
-  .from('messages')
-  .select('*, profiles(username, avatar_url, display_name, social_links)')
-  .eq('room', channel)
-  .order('created_at', { ascending: true })
-  .limit(80);
 
-  if (error) { console.error(error); return; }
+  console.log("Loading room:", channel);
+
+  const { data, error } = await sb
+    .from('messages')
+    .select('*, profiles(username, avatar_url, display_name, social_links)')
+    .eq('room', channel)
+    .order('created_at', { ascending: true })
+    .limit(80);
+
+  console.log("Messages:", data);
+  console.log("Error:", error);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
   const wrap = document.getElementById('messages');
   wrap.innerHTML = '';
-  (data || []).forEach(msg => appendMessage(msg));
+
+  data.forEach(msg => appendMessage(msg));
+
   scrollToBottom();
 }
 
