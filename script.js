@@ -451,7 +451,9 @@ async function sendMessage() {
   }
 
   const input = document.getElementById('chat-input');
-  const content = input.value.trim();
+  const content = input.value
+  .replace(/\s+/g, ' ')
+  .trim();
 
   if (!content) return;
 
@@ -474,7 +476,15 @@ async function sendMessage() {
 }
 
 function handleChatKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  // Ignore IME/composition events
+  if (e.isComposing || e.keyCode === 229) {
+    return;
+  }
+
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
 }
 
 /* ── Typing indicator ─────────────────────────────────── */
