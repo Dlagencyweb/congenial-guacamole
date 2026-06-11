@@ -274,7 +274,7 @@ async function loadMessages() {
 
   const { data, error } = await sb
     .from('messages')
-    .select('*, profiles(username, avatar_url, display_name, social_links)')
+  .select('*')
     .eq('room', channel)
     .order('created_at', { ascending: true })
     .limit(80);
