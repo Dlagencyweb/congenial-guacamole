@@ -302,8 +302,6 @@ for (const msg of data || []) {
   appendMessage(msg);
 }
 
-  data.forEach(msg => appendMessage(msg));
-
   scrollToBottom();
 }
 
