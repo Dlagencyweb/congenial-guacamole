@@ -306,6 +306,7 @@ for (const msg of data || []) {
 }
 
 function subscribeRealtime() {
+  // Remove ONLY old realtime channel
   if (realtimeChannel) {
     sb.removeChannel(realtimeChannel);
     realtimeChannel = null;
@@ -313,27 +314,34 @@ function subscribeRealtime() {
 
   realtimeChannel = sb.channel(`room:${roomId()}`)
     .on('postgres_changes', {
-  event: 'INSERT',
-  schema: 'public',
-  table: 'messages',
-  filter: `room=eq.${roomId()}`,
-}, async (payload) => {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'messages',
+      filter: `room=eq.${roomId()}`,
+    }, async (payload) => {
 
-  const msg = payload.new;
+      const msg = payload.new;
 
-  const { data: profile } = await sb
-    .from('profiles')
-    .select('*')
-    .eq('id', msg.user_id)
-    .maybeSingle();
+      // Prevent duplicate DOM insert
+      if (document.querySelector(`[data-msg-id="${msg.id}"]`)) {
+        return;
+      }
 
-  msg.profiles = profile;
+      const { data: profile } = await sb
+        .from('profiles')
+        .select('*')
+        .eq('id', msg.user_id)
+        .maybeSingle();
 
-  appendMessage(msg);
-  scrollToBottom();
-})
+      msg.profiles = profile;
+
+      appendMessage(msg);
+      scrollToBottom();
+    })
     .on('broadcast', { event: 'typing' }, ({ payload }) => {
-      if (payload.user_id !== currentUser?.id) showTyping(payload.username);
+      if (payload.user_id !== currentUser?.id) {
+        showTyping(payload.username);
+      }
     })
     .subscribe();
 }
@@ -389,15 +397,26 @@ function roomId() {
 /* ── Append message to DOM ─────────────────────────────── */
 function appendMessage(msg) {
   const wrap = document.getElementById('messages');
+
+  // Prevent duplicates
+  if (document.querySelector(`[data-msg-id="${msg.id}"]`)) {
+    return;
+  }
+
   const p = msg.profiles || {};
-  const username  = p.username    || 'user';
+  const username  = p.username || 'user';
   const dispName  = p.display_name || username;
-  const avatarUrl = p.avatar_url   || null;
+  const avatarUrl = p.avatar_url || null;
   const time = formatTime(msg.created_at);
   const userId = msg.user_id;
 
   const el = document.createElement('div');
+
   el.className = 'msg';
+
+  // IMPORTANT
+  el.dataset.msgId = msg.id;
+
   el.dataset.userId = userId;
 
   const avatarHtml = avatarUrl
@@ -416,6 +435,7 @@ function appendMessage(msg) {
       <div class="msg-text">${escHtml(msg.content)}</div>
     </div>
   `;
+
   wrap.appendChild(el);
 }
 
