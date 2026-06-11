@@ -273,11 +273,11 @@ async function loadMessages() {
   console.log("Loading room:", channel);
 
   const { data, error } = await sb
-    .from('messages')
+  .from('messages')
   .select('*')
-    .eq('room', channel)
-    .order('created_at', { ascending: true })
-    .limit(80);
+  .eq('room', channel)
+  .order('created_at', { ascending: true })
+  .limit(80);
 
   console.log("Messages:", data);
   console.log("Error:", error);
@@ -289,6 +289,18 @@ async function loadMessages() {
 
   const wrap = document.getElementById('messages');
   wrap.innerHTML = '';
+
+for (const msg of data || []) {
+  const { data: profile } = await sb
+    .from('profiles')
+    .select('*')
+    .eq('id', msg.user_id)
+    .maybeSingle();
+
+  msg.profiles = profile;
+
+  appendMessage(msg);
+}
 
   data.forEach(msg => appendMessage(msg));
 
